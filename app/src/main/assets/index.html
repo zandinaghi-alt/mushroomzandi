@@ -313,6 +313,12 @@
   a.plain{ color:inherit; text-decoration:none; }
   hr.sep{ border:none; border-top:1px solid var(--line); margin:14px 0; }
   .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+
+  @media print{
+    body *{ visibility:hidden; }
+    .receipt-print, .receipt-print *{ visibility:visible; }
+    .receipt-print{ position:absolute; top:0; left:0; width:100%; padding:20px; }
+  }
 </style>
 </head>
 <body>
@@ -403,17 +409,120 @@
 
 <script>
 /* ===================== STATE & STORAGE ===================== */
-let state = { workers:[], factories:[], workdays:[], deductions:[], settlements:[], loaded:false };
+let state = { workers:[], factories:[], workdays:[], deductions:[], settlements:[], jobTypes:[], loaded:false };
 let currentTab = 'dashboard';
 
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
 function fmt(n){ n = Math.round(Number(n)||0); return n.toLocaleString('en-US'); }
 function todayStr(){ return new Date().toISOString().slice(0,10); }
+
+/* ===================== CALENDAR CONVERSION (Jalali / Hijri) =====================
+   Pure-JS, no external libraries — works fully offline.
+   Jalali algorithm: standard jalaali-js public-domain conversion.
+   Hijri algorithm: standard tabular/civil Islamic calendar (arithmetic approximation). */
+const FA_DIGITS = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+function toFaDigits(n){ return String(n).replace(/[0-9]/g, d=>FA_DIGITS[d]); }
+
+function div(a,b){ return ~~(a/b); }
+function mod(a,b){ return a - ~~(a/b)*b; }
+const JALALI_BREAKS = [-61,9,38,199,426,686,756,818,1111,1181,1210,1635,2060,2097,2192,2262,2324,2394,2456,3178];
+function jalCal(jy){
+  const bl = JALALI_BREAKS.length; let gy = jy + 621, leapJ = -14, jp = JALALI_BREAKS[0], jm, jump=0, leapG, march, n, i;
+  for(i=1;i<bl;i+=1){ jm = JALALI_BREAKS[i]; jump = jm - jp; if(jy < jm) break; leapJ += div(jump,33)*8 + div(mod(jump,33),4); jp = jm; }
+  n = jy - jp;
+  leapJ += div(n,33)*8 + div(mod(n,33)+3,4);
+  if(mod(jump,33)===4 && jump-n===4) leapJ += 1;
+  leapG = div(gy,4) - div((div(gy,100)+1)*3,4) - 150;
+  march = 20 + leapJ - leapG;
+  if(jump-n < 6) n = n - jump + div(jump,33)*33;
+  let leap = mod(mod(n+1,33)-1,4);
+  if(leap===-1) leap = 4;
+  return { leap, gy, march };
+}
+function g2d(gy,gm,gd){
+  let d = div((gy + div(gm-8,6) + 100100) * 1461, 4) + div(153*mod(gm+9,12)+2,5) + gd - 34840408;
+  d = d - div(div(gy + 100100 + div(gm-8,6),100)*3,4) + 752;
+  return d;
+}
+function d2g(jdn){
+  let j = 4*jdn + 139361631;
+  j += div(div(4*jdn + 183187720, 146097)*3, 4)*4 - 3908;
+  const i = div(mod(j,1461),4)*5 + 308;
+  const gd = div(mod(i,153),5) + 1;
+  const gm = mod(div(i,153),12) + 1;
+  const gy = div(j,1461) - 100100 + div(8-gm,6);
+  return { gy, gm, gd };
+}
+function j2d(jy,jm,jd){
+  const r = jalCal(jy);
+  return g2d(r.gy,3,r.march) + (jm-1)*31 - div(jm,7)*(jm-7) + jd - 1;
+}
+function d2j(jdn){
+  const gy = d2g(jdn).gy; let jy = gy - 621;
+  const r = jalCal(jy);
+  const jdn1f = g2d(gy,3,r.march);
+  let k = jdn - jdn1f, jm, jd;
+  if(k >= 0){
+    if(k <= 185){ jm = 1 + div(k,31); jd = mod(k,31) + 1; return {jy,jm,jd}; }
+    else k -= 186;
+  } else { jy -= 1; k += 179; if(r.leap===1) k += 1; }
+  jm = 7 + div(k,30); jd = mod(k,30) + 1;
+  return {jy,jm,jd};
+}
+function toJalali(gy,gm,gd){ return d2j(g2d(gy,gm,gd)); }
+
+function gregorianToJDN(y,m,d){
+  const a = Math.floor((14-m)/12), y2 = y + 4800 - a, m2 = m + 12*a - 3;
+  return d + Math.floor((153*m2+2)/5) + 365*y2 + Math.floor(y2/4) - Math.floor(y2/100) + Math.floor(y2/400) - 32045;
+}
+function toHijri(y,m,d){
+  const jdn = gregorianToJDN(y,m,d);
+  const ISLAMIC_EPOCH = 1948440;
+  let l = jdn - ISLAMIC_EPOCH + 10632;
+  const n = Math.floor((l-1)/10631);
+  l = l - 10631*n + 354;
+  const j = (Math.floor((10985-l)/5316))*(Math.floor((50*l)/17719)) + (Math.floor(l/5670))*(Math.floor((43*l)/15238));
+  l = l - (Math.floor((30-j)/15))*(Math.floor((17719*j)/50)) - (Math.floor(j/16))*(Math.floor((15238*j)/43)) + 29;
+  const month = Math.floor((24*l)/709);
+  const day = l - Math.floor((709*month)/24);
+  const year = 30*n + j - 30;
+  return { hy:year, hm:month, hd:day };
+}
+const JALALI_MONTHS = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const HIJRI_MONTHS = ['محرم','صفر','ربیع‌الاول','ربیع‌الثانی','جمادی‌الاول','جمادی‌الثانی','رجب','شعبان','رمضان','شوال','ذی‌القعده','ذی‌الحجه'];
+
+function parseISO(d){ const [y,m,day] = d.split('-').map(Number); return {y,m,day}; }
+
+// Primary display: Shamsi (Jalali) date, e.g. "۱۰ مرداد ۱۴۰۵"
 function fmtDate(d){
   try{
-    const dt = new Date(d);
-    return dt.toLocaleDateString('fa-IR', { year:'numeric', month:'2-digit', day:'2-digit' });
+    const {y,m,day} = parseISO(d);
+    const j = toJalali(y,m,day);
+    return `${toFaDigits(j.jd)} ${JALALI_MONTHS[j.jm-1]} ${toFaDigits(j.jy)}`;
   }catch(e){ return d; }
+}
+// Hijri (Qamari) date, e.g. "۶ صفر ۱۴۴۸"
+function fmtDateHijri(d){
+  try{
+    const {y,m,day} = parseISO(d);
+    const h = toHijri(y,m,day);
+    return `${toFaDigits(h.hd)} ${HIJRI_MONTHS[h.hm-1]} ${toFaDigits(h.hy)}`;
+  }catch(e){ return ''; }
+}
+// Gregorian, simple ISO
+function fmtDateGregorian(d){ return d; }
+// Combined: Shamsi + Qamari + میلادی — used in reports and detail views
+function fmtDateFull(d){
+  return `${fmtDate(d)} ه.ش · ${fmtDateHijri(d)} ه.ق · ${fmtDateGregorian(d)} م`;
+}
+// Attach a live Shamsi/Qamari preview under a native (Gregorian) date input
+function attachDatePreview(inputId, previewId){
+  const inp = document.getElementById(inputId);
+  const prev = document.getElementById(previewId);
+  if(!inp || !prev) return;
+  const update = ()=>{ prev.textContent = inp.value ? fmtDateFull(inp.value) : ''; };
+  inp.addEventListener('input', update);
+  update();
 }
 
 const STORAGE_PREFIX = 'mushroomApp_';
@@ -431,10 +540,10 @@ async function saveKey(key, value){
 }
 
 async function loadAll(){
-  const [w,f,wd,d,s] = await Promise.all([
-    loadKey('workers'), loadKey('factories'), loadKey('workdays'), loadKey('deductions'), loadKey('settlements')
+  const [w,f,wd,d,s,jt] = await Promise.all([
+    loadKey('workers'), loadKey('factories'), loadKey('workdays'), loadKey('deductions'), loadKey('settlements'), loadKey('jobtypes')
   ]);
-  state.workers = w; state.factories = f; state.workdays = wd; state.deductions = d; state.settlements = s;
+  state.workers = w; state.factories = f; state.workdays = wd; state.deductions = d; state.settlements = s; state.jobTypes = jt;
   state.loaded = true;
 }
 
@@ -688,17 +797,21 @@ function renderFactories(){
       ${state.factories.length===0? emptyState('کارخانه‌ای ثبت نشده','با دکمه + یک کارخانه اضافه کنید') :
       state.factories.map(f=>{
         const paid = factoryTotalPaid(f.id);
-        return `<div class="list-row">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <div class="avatar" style="background:var(--clay-light); color:var(--clay);">${initials(f.name)}</div>
-            <div><div class="row-title">${esc(f.name)}</div><div class="row-sub">${f.note?esc(f.note):'بدون توضیح'}</div></div>
+        const jtCount = jobTypesForFactory(f.id).length;
+        return `<div class="list-row" style="flex-direction:column; align-items:stretch; gap:8px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div class="avatar" style="background:var(--clay-light); color:var(--clay);">${initials(f.name)}</div>
+              <div><div class="row-title">${esc(f.name)}</div><div class="row-sub">${f.note?esc(f.note):'بدون توضیح'}</div></div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="pill pill-clay">${fmt(paid)} ت</span>
+              <span class="icon-btn" onclick="openFactoryForm('${f.id}')" style="width:30px;height:30px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+              </span>
+            </div>
           </div>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <span class="pill pill-clay">${fmt(paid)} ت</span>
-            <span class="icon-btn" onclick="openFactoryForm('${f.id}')" style="width:30px;height:30px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-            </span>
-          </div>
+          <button class="btn btn-ghost btn-sm btn-block" onclick="openJobTypesModal('${f.id}')">⚙️ مدیریت نوع کار و مبلغ (${toFaDigits(jtCount)})</button>
         </div>`;
       }).join('')}
     </div>
@@ -736,6 +849,84 @@ async function deleteFactory(id){
   closeModal(); toast('حذف شد'); renderTab(currentTab);
 }
 
+/* ===================== JOB TYPES (نوع کار هر کارخانه) ===================== */
+function jobTypesForFactory(fid){ return state.jobTypes.filter(j=>j.factoryId===fid); }
+function jobTypeName(id){ const j = state.jobTypes.find(x=>x.id===id); return j? j.title : ''; }
+
+function openJobTypesModal(factoryId){
+  const f = state.factories.find(x=>x.id===factoryId);
+  if(!f) return;
+  const list = jobTypesForFactory(factoryId);
+  openModal(`
+    <h2>نوع کارهای «${esc(f.name)}»</h2>
+    <p class="muted">هر نوع کار (مثلاً «برداشت»، «بسته‌بندی»، «کود‌پاشی») را با مبلغ روزانه‌ی معمولش ثبت کنید تا هنگام ثبت کار روزانه، مبلغ خودکار پر شود.</p>
+    <div id="jt-list" style="margin:12px 0;">
+      ${list.length===0? emptyState('نوع کاری ثبت نشده','') :
+        list.map(j=>`<div class="list-row">
+          <div><div class="row-title">${esc(j.title)}</div><div class="row-sub">${fmt(j.amount)} تومان</div></div>
+          <div style="display:flex; gap:6px;">
+            <span class="icon-btn" style="width:30px;height:30px;" onclick="editJobType('${j.id}')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            </span>
+            <span class="icon-btn" style="width:30px;height:30px; color:var(--danger);" onclick="deleteJobType('${j.id}')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+            </span>
+          </div>
+        </div>`).join('')}
+    </div>
+    <hr class="sep">
+    <label class="f-label">نوع کار جدید</label>
+    <input type="text" id="jt-title" placeholder="مثلاً برداشت قارچ" data-factory="${factoryId}">
+    <label class="f-label">مبلغ پیش‌فرض (تومان)</label>
+    <input type="number" id="jt-amount" placeholder="مثلاً 2000000">
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeModal()">بستن</button>
+      <button class="btn btn-primary" style="flex:2" onclick="saveJobType(null,'${factoryId}')">افزودن نوع کار</button>
+    </div>
+  `);
+}
+function editJobType(id){
+  const j = state.jobTypes.find(x=>x.id===id);
+  if(!j) return;
+  openModal(`
+    <h2>ویرایش نوع کار</h2>
+    <label class="f-label">عنوان</label>
+    <input type="text" id="jt-title" value="${esc(j.title)}">
+    <label class="f-label">مبلغ پیش‌فرض (تومان)</label>
+    <input type="number" id="jt-amount" value="${j.amount}">
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="flex:1" onclick="openJobTypesModal('${j.factoryId}')">انصراف</button>
+      <button class="btn btn-primary" style="flex:2" onclick="saveJobType('${j.id}','${j.factoryId}')">ذخیره</button>
+    </div>
+    <button class="btn btn-danger btn-block" style="margin-top:10px" onclick="deleteJobType('${j.id}')">حذف این نوع کار</button>
+  `);
+}
+async function saveJobType(id, factoryId){
+  const title = document.getElementById('jt-title').value.trim();
+  const amount = Number(document.getElementById('jt-amount').value)||0;
+  if(!title){ toast('عنوان نوع کار را وارد کنید', true); return; }
+  if(id){
+    const j = state.jobTypes.find(x=>x.id===id); j.title=title; j.amount=amount;
+  }else{
+    state.jobTypes.push({id:uid(), factoryId, title, amount});
+  }
+  await saveKey('jobtypes', state.jobTypes);
+  toast('ذخیره شد ✓');
+  openJobTypesModal(factoryId);
+  renderTab(currentTab);
+}
+async function deleteJobType(id){
+  const j = state.jobTypes.find(x=>x.id===id);
+  if(!j) return;
+  if(!confirm('این نوع کار حذف شود؟')) return;
+  const fid = j.factoryId;
+  state.jobTypes = state.jobTypes.filter(x=>x.id!==id);
+  await saveKey('jobtypes', state.jobTypes);
+  toast('حذف شد');
+  openJobTypesModal(fid);
+  renderTab(currentTab);
+}
+
 /* ===================== WORKDAYS (کار روزانه) ===================== */
 function renderWorkdays(){
   const sorted = [...state.workdays].sort((a,b)=> (b.date+b.id).localeCompare(a.date+a.id));
@@ -747,7 +938,7 @@ function renderWorkdays(){
         const total = wd.items.reduce((a,i)=>a+i.amount,0);
         return `<div class="list-row" onclick="openWorkdayForm('${wd.id}')" style="cursor:pointer; align-items:flex-start;">
           <div>
-            <div class="row-title">${factoryName(wd.factoryId)}</div>
+            <div class="row-title">${factoryName(wd.factoryId)} ${wd.jobTypeId?'· <span class="pill pill-moss">'+esc(jobTypeName(wd.jobTypeId))+'</span>':''}</div>
             <div class="row-sub">${fmtDate(wd.date)} · ${wd.items.length} کارگر</div>
             <div class="row-sub">${wd.items.map(i=>workerName(i.workerId)+' ('+fmt(i.amount)+')').join('، ')}</div>
           </div>
@@ -765,13 +956,20 @@ function openWorkdayForm(editId){
   }
   const selected = wd ? wd.items.map(i=>i.workerId) : [];
   const amounts = {}; if(wd) wd.items.forEach(i=> amounts[i.workerId]=i.amount);
+  const initialFactoryId = wd ? wd.factoryId : state.factories[0].id;
   openModal(`
     <h2>${wd? 'ویرایش کار روزانه' : 'ثبت کار روزانه جدید'}</h2>
     <label class="f-label">تاریخ</label>
     <input type="date" id="f-wd-date" value="${wd?wd.date:todayStr()}">
+    <div class="muted" id="f-wd-date-preview" style="margin-top:4px;"></div>
     <label class="f-label">کارخانه</label>
-    <select id="f-wd-factory">
+    <select id="f-wd-factory" onchange="onWdFactoryChange()">
       ${state.factories.map(f=>`<option value="${f.id}" ${wd&&wd.factoryId===f.id?'selected':''}>${esc(f.name)}</option>`).join('')}
+    </select>
+    <label class="f-label">نوع کار (اختیاری — با انتخاب، مبلغ خودکار پر می‌شود)</label>
+    <select id="f-wd-jobtype" onchange="applyJobTypeAmount()">
+      <option value="">— بدون نوع کار مشخص —</option>
+      ${jobTypesForFactory(initialFactoryId).map(j=>`<option value="${j.id}" ${wd&&wd.jobTypeId===j.id?'selected':''}>${esc(j.title)} (${fmt(j.amount)} ت)</option>`).join('')}
     </select>
     <label class="f-label">مبلغ کل روز (برای تقسیم مساوی)</label>
     <div class="field-row">
@@ -795,6 +993,20 @@ function openWorkdayForm(editId){
     </div>
     ${wd?`<button class="btn btn-danger btn-block" style="margin-top:10px" onclick="deleteWorkday('${wd.id}')">حذف این روز کاری</button>`:''}
   `);
+  attachDatePreview('f-wd-date','f-wd-date-preview');
+}
+function onWdFactoryChange(){
+  const factoryId = document.getElementById('f-wd-factory').value;
+  const sel = document.getElementById('f-wd-jobtype');
+  const types = jobTypesForFactory(factoryId);
+  sel.innerHTML = '<option value="">— بدون نوع کار مشخص —</option>' +
+    types.map(j=>`<option value="${j.id}">${esc(j.title)} (${fmt(j.amount)} ت)</option>`).join('');
+}
+function applyJobTypeAmount(){
+  const jtId = document.getElementById('f-wd-jobtype').value;
+  if(!jtId) return;
+  const j = state.jobTypes.find(x=>x.id===jtId);
+  if(j) document.getElementById('f-wd-total').value = j.amount;
 }
 function toggleWdRow(wid){
   const row = document.getElementById('wdrow-'+wid);
@@ -815,6 +1027,7 @@ function splitEqually(){
 async function saveWorkday(id){
   const date = document.getElementById('f-wd-date').value;
   const factoryId = document.getElementById('f-wd-factory').value;
+  const jobTypeId = document.getElementById('f-wd-jobtype').value || null;
   const note = document.getElementById('f-wd-note').value.trim();
   if(!date){ toast('تاریخ را وارد کنید', true); return; }
   const items = [];
@@ -826,9 +1039,9 @@ async function saveWorkday(id){
   if(items.length===0){ toast('حداقل یک کارگر با مبلغ معتبر انتخاب کنید', true); return; }
   if(id){
     const wd = state.workdays.find(x=>x.id===id);
-    wd.date=date; wd.factoryId=factoryId; wd.items=items; wd.note=note;
+    wd.date=date; wd.factoryId=factoryId; wd.jobTypeId=jobTypeId; wd.items=items; wd.note=note;
   }else{
-    state.workdays.push({id:uid(), date, factoryId, items, note});
+    state.workdays.push({id:uid(), date, factoryId, jobTypeId, items, note});
   }
   await saveKey('workdays', state.workdays);
   closeModal(); toast('کار روزانه ثبت شد ✓'); renderTab(currentTab);
@@ -871,6 +1084,7 @@ function openDeductionForm(editId){
     </select>
     <label class="f-label">تاریخ</label>
     <input type="date" id="f-ded-date" value="${d?d.date:todayStr()}">
+    <div class="muted" id="f-ded-date-preview" style="margin-top:4px;"></div>
     <label class="f-label">کارخانه مربوطه (اختیاری)</label>
     <select id="f-ded-factory">
       <option value="">— بدون کارخانه —</option>
@@ -896,6 +1110,7 @@ function openDeductionForm(editId){
     </div>
     ${d?`<button class="btn btn-ghost btn-block" style="margin-top:10px" onclick="deleteDeduction('${d.id}')">حذف این کسر</button>`:''}
   `);
+  attachDatePreview('f-ded-date','f-ded-date-preview');
 }
 function calcDedAmount(){
   const kg = Number(document.getElementById('f-ded-kg').value)||0;
@@ -945,8 +1160,8 @@ function renderSettlements(){
       ${sorted.length===0? emptyState('تسویه‌ای ثبت نشده','با دکمه + یک تسویه ثبت کنید') :
       sorted.map(s=>`<div class="list-row" onclick="openSettlementForm(null,'${s.id}')" style="cursor:pointer;">
         <div>
-          <div class="row-title">${workerName(s.workerId)}</div>
-          <div class="row-sub">${s.bankName?esc(s.bankName)+' · ':''}${s.cardNumber?maskCard(s.cardNumber):'بدون شماره کارت'}</div>
+          <div class="row-title">${workerName(s.workerId)} · <span class="pill ${methodPillClass(s.method)}">${methodLabel(s.method)}</span></div>
+          <div class="row-sub">${settlementSubtitle(s)}</div>
           <div class="row-sub">${fmtDate(s.date)}</div>
         </div>
         <div class="balance-tag" style="color:var(--gold)">${fmt(s.amount)} ت</div>
@@ -956,14 +1171,28 @@ function renderSettlements(){
   document.getElementById('tab-settlements').innerHTML = html;
 }
 function maskCard(c){
-  c = (c||'').replace(/\\s+/g,'');
+  c = (c||'').replace(/\s+/g,'');
   if(c.length<=4) return c;
   return c.slice(0,4)+' •••• •••• '+c.slice(-4);
+}
+function methodLabel(m){
+  return {card:'💳 کارت به کارت', cash:'💵 نقدی', cheque:'🧾 چک', other:'✳️ سایر'}[m||'card'] || '💳 کارت به کارت';
+}
+function methodPillClass(m){
+  return {card:'pill-moss', cash:'pill-gold', cheque:'pill-clay', other:'pill-clay'}[m||'card'] || 'pill-moss';
+}
+function settlementSubtitle(s){
+  const m = s.method || 'card';
+  if(m==='card') return `${s.bankName?esc(s.bankName)+' · ':''}${s.cardNumber?maskCard(s.cardNumber):'بدون شماره کارت'}`;
+  if(m==='cheque') return `${s.chequeBank?esc(s.chequeBank)+' · ':''}چک ${s.chequeNumber?'شماره '+esc(s.chequeNumber):''}${s.chequeDueDate?' · سررسید '+fmtDate(s.chequeDueDate):''}`;
+  if(m==='cash') return 'پرداخت نقدی';
+  return s.note? esc(s.note) : 'سایر روش‌ها';
 }
 function openSettlementForm(preselectWorkerId, editId){
   const s = editId ? state.settlements.find(x=>x.id===editId) : null;
   if(state.workers.length===0){ toast('ابتدا یک کارگر ثبت کنید', true); return; }
   const wid = s? s.workerId : (preselectWorkerId || state.workers[0].id);
+  const method = s? (s.method||'card') : 'card';
   openModal(`
     <h2>${s?'ویرایش تسویه':'ثبت تسویه حساب'}</h2>
     <label class="f-label">کارگر</label>
@@ -973,15 +1202,46 @@ function openSettlementForm(preselectWorkerId, editId){
     <p class="muted" id="f-st-balance-hint" style="margin:6px 0 0;"></p>
     <label class="f-label">تاریخ</label>
     <input type="date" id="f-st-date" value="${s?s.date:todayStr()}">
-    <label class="f-label">مبلغ واریزی (تومان)</label>
-    <input type="number" id="f-st-amount" value="${s?s.amount:''}" placeholder="0">
-    <hr class="sep">
-    <label class="f-label">نام بانک</label>
-    <input type="text" id="f-st-bank" value="${s?esc(s.bankName||''):''}" placeholder="مثلاً بانک ملت">
-    <label class="f-label">شماره کارت واریزی</label>
-    <input type="text" id="f-st-card" value="${s?esc(s.cardNumber||''):''}" placeholder="xxxx xxxx xxxx xxxx" maxlength="19">
-    <label class="f-label">نام صاحب کارت</label>
-    <input type="text" id="f-st-holder" value="${s?esc(s.cardHolder||''):''}" placeholder="نام و نام خانوادگی">
+    <div class="muted" id="f-st-date-preview" style="margin-top:4px;"></div>
+    <label class="f-label">مبلغ تسویه (تومان)</label>
+    <input type="number" id="f-st-amount" value="${s?s.amount:''}" placeholder="0" oninput="updateStBalance()">
+    <p class="muted" id="f-st-remaining-hint" style="margin:6px 0 0; font-weight:700;"></p>
+
+    <label class="f-label">روش پرداخت</label>
+    <select id="f-st-method" onchange="onStMethodChange()">
+      <option value="card" ${method==='card'?'selected':''}>💳 کارت به کارت</option>
+      <option value="cash" ${method==='cash'?'selected':''}>💵 نقدی</option>
+      <option value="cheque" ${method==='cheque'?'selected':''}>🧾 چک</option>
+      <option value="other" ${method==='other'?'selected':''}>✳️ سایر</option>
+    </select>
+
+    <div id="st-method-card" style="display:${method==='card'?'block':'none'};">
+      <label class="f-label">نام بانک</label>
+      <input type="text" id="f-st-bank" value="${s?esc(s.bankName||''):''}" placeholder="مثلاً بانک ملت">
+      <label class="f-label">شماره کارت واریزی</label>
+      <input type="text" id="f-st-card" value="${s?esc(s.cardNumber||''):''}" placeholder="xxxx xxxx xxxx xxxx" maxlength="19">
+      <label class="f-label">نام صاحب کارت</label>
+      <input type="text" id="f-st-holder" value="${s?esc(s.cardHolder||''):''}" placeholder="نام و نام خانوادگی">
+    </div>
+
+    <div id="st-method-cheque" style="display:${method==='cheque'?'block':'none'};">
+      <label class="f-label">نام بانک صادرکننده چک</label>
+      <input type="text" id="f-st-cheque-bank" value="${s?esc(s.chequeBank||''):''}" placeholder="مثلاً بانک ملی">
+      <label class="f-label">شماره چک</label>
+      <input type="text" id="f-st-cheque-number" value="${s?esc(s.chequeNumber||''):''}" placeholder="شماره چک">
+      <label class="f-label">تاریخ سررسید</label>
+      <input type="date" id="f-st-cheque-due" value="${s&&s.chequeDueDate?s.chequeDueDate:''}">
+      <div class="muted" id="f-st-cheque-due-preview" style="margin-top:4px;"></div>
+    </div>
+
+    <div id="st-method-cash" style="display:${method==='cash'?'block':'none'};">
+      <p class="muted">مبلغ به‌صورت نقدی و مستقیم پرداخت شده است.</p>
+    </div>
+
+    <div id="st-method-other" style="display:${method==='other'?'block':'none'};">
+      <p class="muted">روش پرداخت را در قسمت توضیحات پایین شرح دهید.</p>
+    </div>
+
     <label class="f-label">توضیح (اختیاری)</label>
     <textarea id="f-st-note">${s&&s.note?esc(s.note):''}</textarea>
     <div class="modal-actions">
@@ -991,6 +1251,14 @@ function openSettlementForm(preselectWorkerId, editId){
     ${s?`<button class="btn btn-danger btn-block" style="margin-top:10px" onclick="deleteSettlement('${s.id}')">حذف این تسویه</button>`:''}
   `);
   setTimeout(updateStBalance, 0);
+  attachDatePreview('f-st-date','f-st-date-preview');
+  if(document.getElementById('f-st-cheque-due')) attachDatePreview('f-st-cheque-due','f-st-cheque-due-preview');
+}
+function onStMethodChange(){
+  const m = document.getElementById('f-st-method').value;
+  ['card','cheque','cash','other'].forEach(k=>{
+    document.getElementById('st-method-'+k).style.display = (k===m) ? 'block' : 'none';
+  });
 }
 function updateStBalance(){
   const wid = document.getElementById('f-st-worker').value;
@@ -998,31 +1266,90 @@ function updateStBalance(){
   document.getElementById('f-st-balance-hint').textContent = `مانده فعلی این کارگر: ${fmt(bal)} تومان`;
   const amtField = document.getElementById('f-st-amount');
   if(!amtField.value) amtField.value = bal>0? bal : '';
+  const amount = Number(amtField.value)||0;
+  const remaining = bal - amount;
+  const hint = document.getElementById('f-st-remaining-hint');
+  if(remaining===0) hint.innerHTML = '✅ مانده بعد از این تسویه: <span style="color:var(--moss-dark)">۰ (تسویه کامل)</span>';
+  else if(remaining>0) hint.innerHTML = `مانده بعد از این تسویه: <span style="color:var(--clay)">${fmt(remaining)} تومان (هنوز طلبکار است)</span>`;
+  else hint.innerHTML = `مانده بعد از این تسویه: <span style="color:var(--danger)">${fmt(Math.abs(remaining))} تومان (پرداخت اضافه)</span>`;
 }
 async function saveSettlement(id){
   const workerId = document.getElementById('f-st-worker').value;
   const date = document.getElementById('f-st-date').value;
   const amount = Number(document.getElementById('f-st-amount').value)||0;
-  const bankName = document.getElementById('f-st-bank').value.trim();
-  const cardNumber = document.getElementById('f-st-card').value.trim();
-  const cardHolder = document.getElementById('f-st-holder').value.trim();
+  const method = document.getElementById('f-st-method').value;
   const note = document.getElementById('f-st-note').value.trim();
   if(!date){ toast('تاریخ را وارد کنید', true); return; }
   if(amount<=0){ toast('مبلغ تسویه باید بزرگتر از صفر باشد', true); return; }
+
+  const data = {workerId, date, amount, method, note,
+    bankName:'', cardNumber:'', cardHolder:'', chequeBank:'', chequeNumber:'', chequeDueDate:''};
+  if(method==='card'){
+    data.bankName = document.getElementById('f-st-bank').value.trim();
+    data.cardNumber = document.getElementById('f-st-card').value.trim();
+    data.cardHolder = document.getElementById('f-st-holder').value.trim();
+  } else if(method==='cheque'){
+    data.chequeBank = document.getElementById('f-st-cheque-bank').value.trim();
+    data.chequeNumber = document.getElementById('f-st-cheque-number').value.trim();
+    data.chequeDueDate = document.getElementById('f-st-cheque-due').value;
+  }
+
+  let saved;
   if(id){
     const s = state.settlements.find(x=>x.id===id);
-    Object.assign(s, {workerId,date,amount,bankName,cardNumber,cardHolder,note});
+    Object.assign(s, data);
+    saved = s;
   }else{
-    state.settlements.push({id:uid(), workerId,date,amount,bankName,cardNumber,cardHolder,note});
+    saved = {id:uid(), ...data};
+    state.settlements.push(saved);
   }
   await saveKey('settlements', state.settlements);
-  closeModal(); toast('تسویه ثبت شد ✓'); renderTab(currentTab);
+  toast('تسویه ثبت شد ✓');
+  renderTab(currentTab);
+  openSettlementReceipt(saved.id);
 }
 async function deleteSettlement(id){
   if(!confirm('این تسویه حذف شود؟')) return;
   state.settlements = state.settlements.filter(x=>x.id!==id);
   await saveKey('settlements', state.settlements);
   closeModal(); toast('حذف شد'); renderTab(currentTab);
+}
+function openSettlementReceipt(id){
+  const s = state.settlements.find(x=>x.id===id);
+  if(!s) return;
+  const remaining = workerBalance(s.workerId);
+  let methodDetails = '';
+  if(s.method==='card'){
+    methodDetails = `
+      <div class="list-row"><div class="row-title">بانک</div><div>${s.bankName?esc(s.bankName):'—'}</div></div>
+      <div class="list-row"><div class="row-title">شماره کارت</div><div>${s.cardNumber?maskCard(s.cardNumber):'—'}</div></div>
+      <div class="list-row"><div class="row-title">صاحب کارت</div><div>${s.cardHolder?esc(s.cardHolder):'—'}</div></div>`;
+  } else if(s.method==='cheque'){
+    methodDetails = `
+      <div class="list-row"><div class="row-title">بانک چک</div><div>${s.chequeBank?esc(s.chequeBank):'—'}</div></div>
+      <div class="list-row"><div class="row-title">شماره چک</div><div>${s.chequeNumber?esc(s.chequeNumber):'—'}</div></div>
+      <div class="list-row"><div class="row-title">سررسید</div><div>${s.chequeDueDate?fmtDate(s.chequeDueDate):'—'}</div></div>`;
+  }
+  openModal(`
+    <div class="receipt-print">
+      <h2 style="text-align:center;">🍄 رسید تسویه‌حساب</h2>
+      <p class="muted" style="text-align:center;">حساب کارگاه قارچ</p>
+      <hr class="sep">
+      <div class="list-row"><div class="row-title">کارگر</div><div style="font-weight:800;">${esc(workerName(s.workerId))}</div></div>
+      <div class="list-row"><div class="row-title">تاریخ</div><div>${fmtDateFull(s.date)}</div></div>
+      <div class="list-row"><div class="row-title">مبلغ</div><div style="font-weight:800; color:var(--gold);">${fmt(s.amount)} تومان</div></div>
+      <div class="list-row"><div class="row-title">روش پرداخت</div><div>${methodLabel(s.method)}</div></div>
+      ${methodDetails}
+      ${s.note?`<div class="list-row"><div class="row-title">توضیح</div><div>${esc(s.note)}</div></div>`:''}
+      <hr class="sep">
+      <div class="list-row"><div class="row-title">مانده حساب پس از این تسویه</div><div style="font-weight:800; color:${remaining>0?'var(--clay)':'var(--moss-dark)'};">${fmt(remaining)} تومان</div></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeModal()">بستن</button>
+      <button class="btn btn-primary" style="flex:1" onclick="window.print()">🖨️ چاپ / اشتراک‌گذاری</button>
+      <button class="btn btn-gold" style="flex:1" onclick="openSettlementForm(null,'${s.id}')">ویرایش</button>
+    </div>
+  `);
 }
 
 /* ===================== REPORTS ===================== */
@@ -1034,27 +1361,74 @@ function renderReports(){
         <div><label class="f-label">از تاریخ</label><input type="date" id="rep-from"></div>
         <div><label class="f-label">تا تاریخ</label><input type="date" id="rep-to" value="${todayStr()}"></div>
       </div>
+      <div class="field-row" style="margin-top:4px;">
+        <div class="muted" id="rep-from-preview"></div>
+        <div class="muted" id="rep-to-preview"></div>
+      </div>
+      <label class="f-label">کارگر خاص (اختیاری)</label>
+      <select id="rep-worker">
+        <option value="">— همه کارگران —</option>
+        ${state.workers.map(w=>`<option value="${w.id}">${esc(w.name)}</option>`).join('')}
+      </select>
+      <label class="f-label">کارخانه خاص (اختیاری)</label>
+      <select id="rep-factory">
+        <option value="">— همه کارخانه‌ها —</option>
+        ${state.factories.map(f=>`<option value="${f.id}">${esc(f.name)}</option>`).join('')}
+      </select>
       <button class="btn btn-primary btn-block" style="margin-top:12px;" onclick="generateReport()">نمایش گزارش</button>
     </div>
     <div id="report-output"></div>
   `;
   document.getElementById('tab-reports').innerHTML = html;
+  attachDatePreview('rep-from','rep-from-preview');
+  attachDatePreview('rep-to','rep-to-preview');
   generateReport();
 }
 function generateReport(){
   const from = document.getElementById('rep-from')?.value || '';
   const to = document.getElementById('rep-to')?.value || '';
+  const workerId = document.getElementById('rep-worker')?.value || '';
+  const factoryId = document.getElementById('rep-factory')?.value || '';
   const range = {from, to};
-  let workerRows = state.workers.map(w=>{
-    const e = workerEarned(w.id, range), d = workerDeducted(w.id, range), s = workerSettled(w.id, range);
+
+  const wdFiltered = state.workdays.filter(wd=> inRange(wd.date,range) && (!factoryId || wd.factoryId===factoryId));
+  const dedFiltered = state.deductions.filter(d=> inRange(d.date,range) && (!factoryId || d.factoryId===factoryId));
+  const setFiltered = state.settlements.filter(s=> inRange(s.date,range));
+
+  const workerList = workerId ? state.workers.filter(w=>w.id===workerId) : state.workers;
+  const factoryList = factoryId ? state.factories.filter(f=>f.id===factoryId) : state.factories;
+
+  let workerRows = workerList.map(w=>{
+    const e = wdFiltered.reduce((sum,wd)=> sum + wd.items.filter(i=>i.workerId===w.id).reduce((a,i)=>a+i.amount,0), 0);
+    const d = dedFiltered.filter(x=>x.workerId===w.id).reduce((s,x)=>s+x.amount,0);
+    const s = workerId ? setFiltered.filter(x=>x.workerId===w.id).reduce((s2,x)=>s2+x.amount,0) : setFiltered.filter(x=>x.workerId===w.id).reduce((s2,x)=>s2+x.amount,0);
     return {name:w.name, e, d, s, bal:e-d-s};
   });
-  let factoryRows = state.factories.map(f=> ({name:f.name, total: factoryTotalPaid(f.id, range)}));
+  let factoryRows = factoryList.map(f=>{
+    const total = wdFiltered.filter(wd=>wd.factoryId===f.id).reduce((s,wd)=> s + wd.items.reduce((a,i)=>a+i.amount,0), 0);
+    return {name:f.name, total};
+  });
+
+  // Job-type breakdown (within the filtered work days)
+  const jtTotals = {};
+  wdFiltered.forEach(wd=>{
+    const key = wd.jobTypeId ? jobTypeName(wd.jobTypeId) : 'بدون نوع کار مشخص';
+    const total = wd.items.reduce((a,i)=>a+i.amount,0);
+    jtTotals[key] = (jtTotals[key]||0) + total;
+  });
+  const jtRows = Object.entries(jtTotals).sort((a,b)=>b[1]-a[1]);
+
   const totalEarned = workerRows.reduce((a,r)=>a+r.e,0);
   const totalDed = workerRows.reduce((a,r)=>a+r.d,0);
   const totalSettled = workerRows.reduce((a,r)=>a+r.s,0);
 
+  const periodLine = (from||to)
+    ? `از ${from?fmtDate(from):'ابتدا'} تا ${to?fmtDate(to):'اکنون'} <span class="muted">(${from?fmtDateHijri(from):'—'} تا ${to?fmtDateHijri(to):'—'} قمری)</span>`
+    : 'کل بازه‌ی زمانی ثبت‌شده';
+
   const html = `
+    <p class="muted" style="text-align:center; margin:6px 0 14px;">${periodLine}</p>
+
     <div class="section-title">جمع‌بندی کارگران</div>
     <div class="card">
       ${workerRows.length===0? emptyState('داده‌ای نیست','') : `
@@ -1065,6 +1439,7 @@ function generateReport(){
         </tbody>
       </table>`}
     </div>
+
     <div class="section-title">جمع‌بندی کارخانه‌ها</div>
     <div class="card">
       ${factoryRows.length===0? emptyState('داده‌ای نیست','') : `
@@ -1073,8 +1448,18 @@ function generateReport(){
         <tbody>${factoryRows.map(r=>`<tr><td>${esc(r.name)}</td><td>${fmt(r.total)}</td></tr>`).join('')}</tbody>
       </table>`}
     </div>
+
+    <div class="section-title">جمع‌بندی بر اساس نوع کار</div>
+    <div class="card">
+      ${jtRows.length===0? emptyState('داده‌ای نیست','') : `
+      <table class="rep-table">
+        <thead><tr><th>نوع کار</th><th>مجموع مبلغ</th></tr></thead>
+        <tbody>${jtRows.map(([name,total])=>`<tr><td>${esc(name)}</td><td>${fmt(total)}</td></tr>`).join('')}</tbody>
+      </table>`}
+    </div>
+
     <div class="stat-grid">
-      <div class="stat-card"><div class="num">${fmt(totalEarned)}</div><div class="lbl">جمع دریافتی همه</div></div>
+      <div class="stat-card"><div class="num">${fmt(totalEarned)}</div><div class="lbl">جمع دریافتی</div></div>
       <div class="stat-card gold"><div class="num">${fmt(totalSettled)}</div><div class="lbl">جمع تسویه‌شده</div></div>
     </div>
   `;
@@ -1109,7 +1494,8 @@ function exportBackup(){
   const data = {
     exportedAt: new Date().toISOString(),
     workers: state.workers, factories: state.factories,
-    workdays: state.workdays, deductions: state.deductions, settlements: state.settlements
+    workdays: state.workdays, deductions: state.deductions, settlements: state.settlements,
+    jobTypes: state.jobTypes
   };
   const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
@@ -1132,10 +1518,11 @@ function importBackup(){
       state.workdays = data.workdays || [];
       state.deductions = data.deductions || [];
       state.settlements = data.settlements || [];
+      state.jobTypes = data.jobTypes || [];
       await Promise.all([
         saveKey('workers', state.workers), saveKey('factories', state.factories),
         saveKey('workdays', state.workdays), saveKey('deductions', state.deductions),
-        saveKey('settlements', state.settlements)
+        saveKey('settlements', state.settlements), saveKey('jobtypes', state.jobTypes)
       ]);
       toast('بازیابی با موفقیت انجام شد ✓');
       renderTab(currentTab);
@@ -1146,14 +1533,17 @@ function importBackup(){
 async function resetAllData(){
   if(!confirm('آیا مطمئن هستید؟ همه اطلاعات برای همیشه حذف می‌شود.')) return;
   if(!confirm('تأیید نهایی: تمام کارگران، کارخانه‌ها، کارها، کسورات و تسویه‌ها پاک شود؟')) return;
-  state.workers=[]; state.factories=[]; state.workdays=[]; state.deductions=[]; state.settlements=[];
-  await Promise.all([saveKey('workers',[]),saveKey('factories',[]),saveKey('workdays',[]),saveKey('deductions',[]),saveKey('settlements',[])]);
+  state.workers=[]; state.factories=[]; state.workdays=[]; state.deductions=[]; state.settlements=[]; state.jobTypes=[];
+  await Promise.all([saveKey('workers',[]),saveKey('factories',[]),saveKey('workdays',[]),saveKey('deductions',[]),saveKey('settlements',[]),saveKey('jobtypes',[])]);
   toast('همه اطلاعات پاک شد'); renderTab(currentTab);
 }
 
 /* ===================== INIT ===================== */
+const WEEKDAY_FA = ['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
 async function init(){
-  document.getElementById('header-date').textContent = new Date().toLocaleDateString('fa-IR', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  const today = todayStr();
+  const weekday = WEEKDAY_FA[new Date().getDay()];
+  document.getElementById('header-date').textContent = `${weekday} ${fmtDate(today)} ه.ش`;
   await loadAll();
   goTab('dashboard');
 }
