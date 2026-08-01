@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>حساب کارگاه قارچ</title>
+<meta name="theme-color" content="#3F5C3A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="حساب قارچ">
+<!-- این برنامه کاملاً آفلاین است: هیچ فونت یا فایلی از اینترنت بارگذاری نمی‌شود -->
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogItit2LPYp9ioINqp2KfYsdqv2KfZhyDZgtin2LHahiIsICJzaG9ydF9uYW1lIjogItit2LPYp9ioINmC2KfYsdqGIiwgInN0YXJ0X3VybCI6ICIuLyIsICJzY29wZSI6ICIuLyIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjRjJFQkREIiwgInRoZW1lX2NvbG9yIjogIiMzRjVDM0EiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiZGlyIjogInJ0bCIsICJsYW5nIjogImZhIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBTUFBQUFEQUNBWUFBQUJTM0d3SEFBQUUvMGxFUVZSNG5PM2R6WFhUVEJpR1lTVW5WYkdoZ1pUQUtpV2tFRXBnUlFrMHdJYTIrQmJmQ1NkL3NpMXBKTTA3ejNWdFNXeWhlVytON0Rod04zWG02N2N2Zjg4K0J2YnorK2VmdTdPUDRiVlREOGF3TTAzblJuSDRFeHQ2TGprNmhzT2V6T0N6eEZFaDdQNGtCcDh0OWc1aHR3YzMrTFMwVndqTkg5VGdzNmZXSWR5M2ZERER6OTVhejFpVG1ndytaMml4RzJ6ZUFRdy9aMmt4ZTVzQ01QeWNiZXNNcnQ1Q0RQOTF2NzcvYVBJNGo4OVBUUjVuWkd0dmgxWjlrK0YvcTlXZ0x5V010OVpFc1BnYjBvZi9yR0cvVlhvVVN5Tlk5TVdwdzkvNzBNOUpqV0ZKQkRkL1lkcndWeDM2T1dreDNCckJUVitVTXZ5akRmMmNsQmh1aWVEcUZ5UU1mOHJndjVjUXdyVUlIbzQ2a0I2bER2NkxsNzkvUWdoekx0WXg2dFUvZmZEbmpCckNwVjFnOWc5R0hINkRmNXNSUTVpTElPSVd5T0F2azNScjlPbG5nVWE2K2h2KzlVWTZkM016UGV3T01OTGluV24wM2VERERqREMxZC93dHpmQ09mMXN0cHYrUmxnUFJsaW9YbzE0YnQ4RVVQM3FQK0lDOWFiNk9YNC80OFBzQU5VWHBwS1J6dlcvQUNwZi9VZGFrQ29xbi9QWHMxNStCNmk4RU5XTmNPNUxCekRDQWxSWGZRM3VwNm5tN1UvMUV6K1NpbXZ4TXZNbGQ0Q0tKM3gwVmRla1hBQlZUM1NDaW10VEtvQ0tKemhOdFRVcUZRQzBkbGZsQlhDMUswdTZLaCtlSzdFREdQNTZxcXhaaVFCZ0w5MEhVT1ZLd2tjVjFxNzdBR0JQWFFkUTRRckNaYjJ2WWRjQndONjZEYUQzS3dlMzYza3R1dzBBamlBQW9uVVpRTTliSnV2MHVxWmRCZ0JIRVFEUkJFQzA3Z0xvOVY2UjdYcGMyKzRDZ0NNSmdHZ0NJSm9BaUNZQW9wWDVuV0RZZ3gyQWFBSWdtZ0NJSmdDaUNZQm9BaUNhQUlnbUFLSUpnR2dDSUpvQWlDWUFvZ21BYUFJZ21nQ0lKZ0NpQ1lCb0FpQ2FBSWdtQUtJSmdHZ0NJSm9BaUNZQW9nbUFhQUlnMnNQWkIxQlZiLy9adytQejA5bUhVSkovRzNUcWI1aVBJcHFRQUZJSGZLdUVRTG9Md0xDT3JiZW92QWdtbWdDSUpnQ2lDWUJvQWlDYUFJZ21BS0lKZ0dnQ0lKb0FpQ1lBb25YM1dhQkxmRTZvaHQ0KzczTkpxUUJlRTBOZktnMzlhMlVEK0l3b2psRjEyRDh6VkFCemhMSE9TSU0rSnlLQWExSURTUmp3YXdTd1VtL1JHT1oxQk5EQW1URVkvRzM4SElCb0FpQ2FBSWdtQUtJSmdHZ0NJSm9BaUNZQW9nbUFhQUlnbWdDSUpnQ2lDWUJvQWlDYUFJZ21BS0lKZ0dnQ0lKb0FpQ1lBb2dtQWFBSWdtZ0NJSmdDaUNZQm9BaUNhQUlnbUFLSUpnR2dDSUpvQWlDWUFvZ21BYUFJZ21nQ0lKZ0NpQ1lCb0FpQ2FBSWdtQUtJSmdHZ0NJSm9BaUNZQW9nbWdnY2ZucDZqbkhZa0FpQ2FBUm82K0dydjZ0eUVBb2dtZ29hT3V5cTcrN1FpZ3NiMkgwL0MzSllBZDdEV2tocis5dTJtYXBxL2Z2dnc5KzBCRzlldjdqODJQWWZEMzhmdm5uN3VIc3c5aWRDL0R1eVlFZzc4L0FSekVNUGZKYXdDaUNZQm85OVAwLzR1QnN3OEVqdlF5ODNZQW9nbUFhUDhDY0J0RWl0ZXpiZ2NnMnBzQTdBS003djJNMndHSTlpRUF1d0NqK215MjdRQkUrelFBdXdDam1adHBPd0RSWmdPd0N6Q0tTN044Y1FjUUFkVmRtMkczUUVTN0dvQmRnS3B1bWQyYmRnQVJVTTJ0TTN2ekxaQUlxR0xKckM1NkRTQUNlcmQwUmhlL0NCWUJ2Vm96bTZ2ZUJSSUJ2Vms3azZ2ZkJoVUJ2ZGd5aTV0K0RpQUN6cloxQmpmL0lFd0VuS1hGN0RVZFh2L0dLRWRvZWRGdCtsRUl1d0Y3YXoxanV3MnMzWUNXOXJxNDduN0ZGZ0piN0gxWGNkZ3RpeEJZNHFqYjZjUHYyWVhBSlVlL2pqejFSYXNZbUtaejN6enA3bDBiVVl5dHQzY0svd042VDRjZnlJWjhXZ0FBQUFCSlJVNUVya0pnZ2c9PSIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIiwgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIn0sIHsic3JjIjogImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBZ0FBQUFJQUNBWUFBQUQwZU5UNkFBQVBYVWxFUVZSNG5PM2R3WFVUU1JTRzBUYUhxTHh4QW9UZ0ZTRVFDQ0d3SWdRU21BMXBlUlljZ1RDeXJHNTFkYjJxLzk3OTJLM3lkTDFQMWJKNVdDanA2Zm54cGZjMUFPemh2KzgvSDNwZkEvL3lRK25FZ0FmNFJTRDBZZEVQWU5nRHJDTUsyclBBRFJqNEFQc1NCUHV6b0RzdzhBR09KUWp1WndFM012UUJhaEFEMjFpMEZReDlnTnJFd08wczFEc01mWUF4aVlIckxNNGJESDZBT1FpQnl5ektHVU1mWUc1aTRBOExzUmo4QUdtRVFIZ0FHUHdBMlpKRElQS0ZHL3dBbkVzTWdhZ1hiUEFEY0UxU0NFUzhVSU1mZ0RVU1F1QkQ3d3RvemZBSFlLMkUyVEZ0NFNUODhBQm9iOWJUZ09sZWxNRVBRQXV6aGNCVWp3QU1md0JhbVczR1RGRXpzLzFRQUtodGh0T0E0VThBREg4QWpqYkQ3Qms2QUdiNEFRQXdwdEZuMEpCSEdLTXZPZ0J6R2ZHUndIQW5BSVkvQU5XTU9KdUdDb0FSRnhpQURLUE5xQ0dPTEVaYlZBQ3lqZkJJb1B3SmdPRVB3R2hHbUYybEEyQ0VCUVNBUzZyUHNMSUJVSDNoQU9BOWxXZFp5UUNvdkdBQXNFYlZtVmJ1UXdwVkZ3cXErdkgxVzVmdisrbkw1eTdmRjBaVjdZT0JwUzdHOEljL2VnMzJ2UWtGK0tOU0JKUzVFTU9mUkxNTSthM0VBWW1xUkVDSml6RDhtVjM2b0Y5TEdEQzdDaEhRL1FJTWYyWmoyTGNoQ3BoTjd3am8rczBOZjBabjJQY2xDaGhkendqbzlvME5mMFprNE5jbUNCaFJyd2pvOGswTmYwWmg0STlORURDS0hoRncrRGMwL0tuTzBKK1RHS0M2b3lQZzBHOW0rRk9Wb1o5RkRGRFZrUkZ3MkRjeS9LbkcwR2RaeEFEMUhCVUJoM3dUdzU4cURIMnVFUU5VY1VRRWZHejlEYUEzUTU5Ym5mKy9JZ2FZWGZQQzhPNmZIZ3g5OWlRRzZLSDFLVURUTDI3NGN6U0RuNWFFQUVkckdRSE52ckRoejFFTWZYb1FBeHlsVlFUNERBRERNdmpwNmZUL254QmdWRTJxd3J0L1dqTDRxVWdJMEZLTFU0RGR2NkRoVHlzR1B5TVFBclN5ZHdUcytzVU1mMW93K0JtUkVLQ0ZQU1BBWndBb3krQm5aRDRqUUhXN2xZUjMvK3pGNEdkR1FvQzk3SFVLc01zWE1melpnOEZQQWlIQUh2YUlBSThBNk03Z0o0bEhBMVJ4ZDBGNDk4OVdCajhJQWJhNzl4VGd3MTRYQW1zWS92Q0xlNEZlN3FvSDcvNVp5MllIYjNNYXdGcjNuQUpzL2c4TmY5WXcrT0YyUW9BMXRrYUFSd0EwWi9qRE91NFpqckNwR3J6NzV4WTJNYmlmMHdCdXNlVVV3QWtBVFJqK3NBLzNFcTJzTGdidi9ybkdaZ1h0T0EzZ21yV25BRTRBMkkzaEQyMjV4OWpUcWxydzdwOUxiRXB3UEtjQlhMTG1GTUFKQUhjeC9LRVA5eDczdWprQXZQdm5OUnNROU9VZTVMVTFzOW8vQnNScU5oMm93ejh1eEZZM25RQjQ5OCtKNFE4MXVUYzV1WFZtK3d3QU43UEJRRzN1VWRZUUFOekV4Z0pqY0s5eXEzZC9YY0R4ZnphYkNZekw1d0t5dmZjcmdVNEFlSlBoRDJOekQzUE4xUUR3N2orWGpRUG00RjdPOWQ0TWR3TEFQMndZTUJmM05KY0lBUDVpbzRBNXViZDU3YzBBY1B5Znh3WUJjM09QNTdrMnk1MEFzQ3lMalFGU3VOYzVFUURZRUNDTWU1NWxlU01BSFAvbnNCRkFKdmQranJkbXVoT0FZRFlBeUdZUHlDWUFRcm54Z1dXeEZ5VDdKd0FjLzgvUERRK2NzeWZNNzlKc2R3SVF4bzBPWEdKdnlDTUFncmpCZ1d2c0VWa0VRQWczTm5BTGUwV092d0xBOC84NXVhR0JOZXdaYzNvOTQ1MEFBRUFnQVRBNUpROXNZZStZbndDWW1Cc1l1SWM5Wkc2L0E4RHovN200Y1lFOTJFdm1jajdyblFCTXlBMEw3TW1lTWljQkFBQ0JCTUJrbERyUWdyMWxQZ0pnSW01UW9DVjd6RncrTElzUEFBSkFpdFBNZHdJd0NXVU9ITUZlTXc4Qk1BRTNKSEFrZTg0Y0JBQUFCQklBZzFQaVFBLzJudkVKZ0lHNUFZR2U3RUZqRXdBQUVFZ0FERXA1QXhYWWk4YjF3ZDhBQUlBc1Q4K1BMMDRBQnFTNGdVcnNTV01TQUlOeG93RVYyWnZHSXdBQUlKQUFHSWpDQmlxelI0MUZBQUJBSUFFd0NHVU5qTUJlTlE0QkFBQ0JCTUFBRkRVd0VudldHQVFBQUFRU0FBQVFTQUFVNXlnTkdKRzlxejRCQUFDQkJFQmhDaG9ZbVQyc05nRUFBSUVFQUFBRUVnQkZPVG9EWm1BdnEwc0FBRUFnQVFBQWdRUkFRWTdNZ0puWTAyb1NBQUFRU0FBQVFDQUJVSXlqTW1CRzlyWjZCQUFBQkJJQUFCQklBQUJBSUFGUWlHZGt3TXpzY2JVSUFBQUlKQUFBSUpBQUFJQkFBcUFJejhhQUJQYTZPZ1FBQUFRU0FBQVFTQUFBUUNBQkFBQ0JCQUFBQkJJQUFCQklBQlRnMTJLQUpQYThHZ1FBQUFRU0FBQVFTQUFBUUNBQkFBQ0JCQUFBQkJJQUFCQklBQUJBSUFFQUFJRUVBQUFFZW5oNmZuenBmUkVBd0xHY0FBQkFJQUVBQUlFRUFBQUVFZ0FBRUVnQUFFQWdBUUFBZ1FRQUFBUVNBQUFRU0FBQVFDQUJBQUNCQkFBQUJCSUFBQkJJQUFCQUlBRUFBSUVFQUFBRUVnQUFFRWdBQUVBZ0FRQUFnUVFBQUFRU0FBQVFTQUFBUUNBQkFBQ0JCQUFBQkJJQUFCQklBQUJBSUFFQUFJRUVBQUFFRWdBQUVFZ0FBRUFnQVFBQWdRUUFBQVFTQUFBUVNBQUFRQ0FCQUFDQkJBQUFCQklBQUJCSUFBQkFJQUVBQUlFRUFBQUVFZ0FBRUVnQUFFQWdBUUFBZ1FRQUFBUVNBQUFRU0FBQVFDQUJBQUNCQkFBQUJCSUFBQkJJQUFCQUlBRUFBSUVFQUFBRUVnQUFFRWdBQUVBZ0FRQUFnUVFBQUFRU0FBQVFTQUFBUUNBQkFBQ0JCQUFBQkJJQUFCQklBQUJBSUFFQUFJRUVBQUFFRWdBQUVFZ0FBRUFnQVFBQWdRUUFBQVFTQUFBUVNBQUFRQ0FCQUFDQkJBQUFCQklBQUJCSUFBQkFvSSs5THdCWWxoOWZ2L1craEVOOSt2SzU5eVZBdkllbjU4ZVgzaGNCbzBnYjFLTVJGbkE3QVVBY1E1eEx4QU5wQkFERE05RHBRVEF3T2dGQWFZWTdJeE1KVkNZQTZNWndCNUZBUHdLQXBneDUyRTRjMEpJQVlCY0dQUnhIR0xBSEFWQ0E0UW1rRVRIOStVdUFBQkJJQUFCQUlBRUFBSUVFQUFBRUVnQUFFRWdBQUVBZ0FRQUFnUVFBQUFRU0FBQVFTQUFBUUNBQkFBQ0JCQUFBQkJJQUFCQklBQUJBSUFFQUFJRUVBQUFFRWdBQUVFZ0FBRUFnQVFBQWdRUUFBQVFTQUFBUVNBQUFRQ0FCQUFDQkJBQUFCQklBQUJCSUFBQkFJQUVBQUlFRUFBQUVFZ0FBRU9qaDZmbnhwZmRGc04yUHI5OTZYd0lRNnRPWHo3MHZnVHNJZ0ltSUFhQTFRMzhlQW1CU1lnRFlpNkUvSndFUVFBd0FheG42OHhNQWdRUUI4SnFCbjBjQXNDeUxLSUFraGozTElnQjRneUNBZVJqNFhDSUFXRVVZUUYwR1BXc0lBSFloRE9BNEJqMTdFQUEwSlF4Z080T2VsZ1FBM1lnRE1PVHBSd0JRbWtoZ1pJWTdsUWtBaGljUzZNRndaM1FDZ0RpQ2dVc01kTklJQUZoQlBOUm1pTVB0QkFBMEloYjJZN0REL2o3MHZnQUE0SGdDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBQUFDQ1FBQUNDUUFBQ0NRQUFDQVFBSUFBQUlKQUFBSUpBQUFJSkFBQUlCQUFnQUFBZ2tBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBQUFDQ1FBQUNDUUFBQ0NRQUFDQVFBSUFBQUlKQUFBSUpBQUFJSkFBQUlCQUFnQUFBZ2tBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBQUFDQ1FBQUNDUUFBQ0NRQUFDQVFBSUFBQUlKQUFBSUpBQUFJSkFBQUlCQUFnQUFBZ2tBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FhK2ZUbGMrOUxtSUoxaERZRUFBQUVFZ0FBRUVnQUFFQWdBUUFOZVg1OUgrc0g3UWdBQUFna0FBQWdrQUNBeGh4amIyUGRvQzBCQUFDQkJBQWN3THZaZGF3WHRDY0FBQ0NRQUlDRGVGZDdHK3NFeHhBQWNDREQ3VHJyQThjUkFBQVFTQURBd2J6THZjeTZ3TEVFQUhSZzJQM05lc0R4UHZ6My9lZEQ3NHVBUkliZUw5WUJqdmZmOTU4UFRnQ2dvL1RobC83Nm9TY0JBSjJsRHNIVTF3MVZDQUFvSUcwWXByMWVxRWdBUUJFcFF6SGxkVUoxSDN0ZkFQREhhVGorK1BxdDg1WHN6K0NIV3B3QVFFR3pEY3ZaWGcvTXdBa0FGRFhEYVlEQkQzWDkvaHNBVDgrUEx6MHZCTGh1cEJBdytLR3UwOS8vY1FJQWd6Z2ZxaFZqd05DSHNRZ0FHTkRyWWRzakNBeDhHSnNBZ0FrWXhzQmFmZ3NBQUFMOURnRC9LQkFBek8xODFqc0JBSUJBQWdBQUFna0FBQWowVndENEhBQUF6T24xakhjQ0FBQ0JCQUFBQkJJQUFCRG9ud0R3T1FBQW1NdWwyZTRFQUFBQ0NRQUFDSFF4QUR3R0FJQTV2RFhUblFBQVFDQUJBQUNCM2d3QWp3RUFZR3pYWnJrVEFBQUlKQUFBSU5EVkFQQVlBQURHOU40TWR3SUFBSUhlRFFDbkFBQXdsbHRtdHhNQUFBZ2tBQUFnMEUwQjRERUFBSXpoMXBudEJBQUFBdDBjQUU0QkFLQzJOYlBhQ1FBQUJGb1ZBRTRCQUtDbXRUUGFDUUFBQkZvZEFFNEJBS0NXTGJQWkNRQUFCTm9VQUU0QkFLQ0dyVFBaQ1FBQUJOb2NBRTRCQUtDdmUyYnhYU2NBSWdBQStyaDNCbnNFQUFDQjdnNEFwd0FBY0t3OVpxOFRBQUFJdEVzQU9BVUFnR1BzTlhOM093RVFBUURRMXA2ejFpTUFBQWkwYXdBNEJRQ0FOdmFlc2J1ZkFJZ0FBTmhYaTluYTVCR0FDQUNBZmJTYXFUNERBQUNCbWdXQVV3QUF1RS9MV2RyMEJFQUVBTUEycldkbzgwY0FJZ0FBMWpsaWR2b01BQUFFT2lRQW5BSUF3RzJPbXBtSG5RQ0lBQUM0N3NoWmVlZ2pBQkVBQUpjZFBTTVAvd3lBQ0FDQXYvV1lqVjArQkNnQ0FPQ1hYak94MjI4QmlBQUEwdldjaFYxL0RWQUVBSkNxOXd6cy9uY0FlaThBQUJ5dHd1enJIZ0RMVW1NaEFPQUlWV1plaVFCWWxqb0xBZ0N0VkpwMVpRSmdXV290REFEc3FkcU1LeFVBeTFKdmdRRGdYaFZuVzdrQVdKYWFDd1VBVzFTZGFTVURZRm5xTGhnQTNLcnlMQ3NiQU10U2UrRUE0SnJxTTZ4MEFDeEwvUVVFZ05kR21GM2xML0RjMC9QalMrOXJBSUMzakRENFQ4cWZBSndiYVdFQnlETGFqQm9xQUpabHZBVUdZSDRqenFiaEx2aWNSd0lBOURUaTREOFo3Z1RnM01nTEQ4RFlScDlCUXdmQXNvei9Bd0JnUERQTW51RmZ3RG1QQkFCb2FZYkJmekw4Q2NDNW1YNHdBTlF5MjR5WjZzV2NjeG9Bd0I1bUcvd25VNzZvYzBJQWdDMW1IZnduVXowQ3VHVDJIeUFBKzB1WUhkTy93SE5PQXdDNEptSHduOFM4MEhOQ0FJQnpTWVAvSk80Rm54TUNBTmtTQi85SjdBcy9Kd1FBc2lRUC9wUDRCVGduQkFEbVp2RC9ZU0hlSUFZQTVtRG9YMlpSM2lFRUFNWms4RjluY1ZZUUF3QzFHZnEzczFBYmlRR0FHZ3o5YlN6YURzUUF3TEVNL2Z0WndBWUVBY0MrRFB6OVdkQURDQUtBZFF6ODlpeHdKNklBNEJmRHZnK0xYcFJBQUdaaHdOZjBQMm1mNnd5ZGliendBQUFBQUVsRlRrU3VRbUNDIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
+<link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAE/0lEQVR4nO3dzXXTTBiGYSUnVbGhgZTAKiWkEEpgRQk0wIa2+BbfCSd/si1pJM07z3VtSWyheW+N7DhwN3Xm67cvf88+Bvbz++efu7OP4bVTD8awM03nRnH4Ext6Ljk6hsOezOCzxFEh7P4kBp8t9g5htwc3+LS0VwjNH9Tgs6fWIdy3fDDDz95az1iTmgw+Z2ixG2zeAQw/Z2kxe5sCMPycbesMrt5CDP91v77/aPI4j89PTR5nZGtvh1Z9k+F/q9WgLyWMt9ZEsPgb0of/rGG/VXoUSyNY9MWpw9/70M9JjWFJBDd/YdrwVx36OWkx3BrBTV+UMvyjDf2clBhuieDqFyQMf8rgv5cQwrUIHo46kB6lDv6Ll79/QghzLtYx6tU/ffDnjBrCpV1g9g9GHH6Df5sRQ5iLIOIWyOAvk3Rr9OlngUa6+hv+9UY6d3MzPewOMNLinWn03eDDDjDC1d/wtzfCOf1stpv+RlgPRlioXo14bt8EUP3qP+IC9ab6OX4/48PsANUXppKRzvW/ACpf/UdakCoqn/PXs15+B6i8ENWNcO5LBzDCAlRXfQ3up6nm7U/1Ez+SimvxMvMld4CKJ3x0VdekXABVT3SCimtTKoCKJzhNtTUqFQC0dlflBXC1K0u6Kh+eK7EDGP56qqxZiQBgL90HUOVKwkcV1q77AGBPXQdQ4QrCZb2vYdcBwN66DaD3Kwe363ktuw0AjiAAonUZQM9bJuv0uqZdBgBHEQDRBEC07gLo9V6R7Xpc2+4CgCMJgGgCIJoAiCYAopX5nWDYgx2AaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIg2sPZB1BVb//Zw+Pz09mHUJJ/G3Tqb5iPIpqQAFIHfKuEQLoLwLCOrbeovAgmmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAonX3WaBLfE6oht4+73NJqQBeE0NfKg39a2UD+IwojlF12D8zVABzhLHOSIM+JyKAa1IDSRjwawSwUm/RGOZ1BNDAmTEY/G38HIBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmggcfnp6jnHYkAiCaARo6+Grv6tyEAogmgoaOuyq7+7Qigsb2H0/C3JYAd7DWkhr+9u2mapq/fvvw9+0BG9ev7j82PYfD38fvnn7uHsw9idC/DuyYEg78/ARzEMPfJawCiCYBo99P0/4uBsw8EjvQy83YAogmAaP8CcBtEitezbgcg2psA7AKM7v2M2wGI9iEAuwCj+my27QBE+zQAuwCjmZtpOwDRZgOwCzCKS7N8cQcQAdVdm2G3QES7GoBdgKpumd2bdgARUM2tM3vzLZAIqGLJrC56DSACerd0Rhe/CBYBvVozm6veBRIBvVk7k6vfBhUBvdgyi5t+DiACzrZ1Bjf/IEwEnKXF7DUdXv/GKEdoedFt+lEIuwF7az1juw2s3YCW9rq47n7FFgJb7H1XcdgtixBY4qjb6cPv2YXAJUe/jjz1RasYmKZz3zzp7l0bUYytt3cK/wN6T4cfyIZ8WgAAAABJRU5ErkJggg==">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAE/0lEQVR4nO3dzXXTTBiGYSUnVbGhgZTAKiWkEEpgRQk0wIa2+BbfCSd/si1pJM07z3VtSWyheW+N7DhwN3Xm67cvf88+Bvbz++efu7OP4bVTD8awM03nRnH4Ext6Ljk6hsOezOCzxFEh7P4kBp8t9g5htwc3+LS0VwjNH9Tgs6fWIdy3fDDDz95az1iTmgw+Z2ixG2zeAQw/Z2kxe5sCMPycbesMrt5CDP91v77/aPI4j89PTR5nZGtvh1Z9k+F/q9WgLyWMt9ZEsPgb0of/rGG/VXoUSyNY9MWpw9/70M9JjWFJBDd/YdrwVx36OWkx3BrBTV+UMvyjDf2clBhuieDqFyQMf8rgv5cQwrUIHo46kB6lDv6Ll79/QghzLtYx6tU/ffDnjBrCpV1g9g9GHH6Df5sRQ5iLIOIWyOAvk3Rr9OlngUa6+hv+9UY6d3MzPewOMNLinWn03eDDDjDC1d/wtzfCOf1stpv+RlgPRlioXo14bt8EUP3qP+IC9ab6OX4/48PsANUXppKRzvW/ACpf/UdakCoqn/PXs15+B6i8ENWNcO5LBzDCAlRXfQ3up6nm7U/1Ez+SimvxMvMld4CKJ3x0VdekXABVT3SCimtTKoCKJzhNtTUqFQC0dlflBXC1K0u6Kh+eK7EDGP56qqxZiQBgL90HUOVKwkcV1q77AGBPXQdQ4QrCZb2vYdcBwN66DaD3Kwe363ktuw0AjiAAonUZQM9bJuv0uqZdBgBHEQDRBEC07gLo9V6R7Xpc2+4CgCMJgGgCIJoAiCYAopX5nWDYgx2AaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIg2sPZB1BVb//Zw+Pz09mHUJJ/G3Tqb5iPIpqQAFIHfKuEQLoLwLCOrbeovAgmmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAonX3WaBLfE6oht4+73NJqQBeE0NfKg39a2UD+IwojlF12D8zVABzhLHOSIM+JyKAa1IDSRjwawSwUm/RGOZ1BNDAmTEY/G38HIBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmggcfnp6jnHYkAiCaARo6+Grv6tyEAogmgoaOuyq7+7Qigsb2H0/C3JYAd7DWkhr+9u2mapq/fvvw9+0BG9ev7j82PYfD38fvnn7uHsw9idC/DuyYEg78/ARzEMPfJawCiCYBo99P0/4uBsw8EjvQy83YAogmAaP8CcBtEitezbgcg2psA7AKM7v2M2wGI9iEAuwCj+my27QBE+zQAuwCjmZtpOwDRZgOwCzCKS7N8cQcQAdVdm2G3QES7GoBdgKpumd2bdgARUM2tM3vzLZAIqGLJrC56DSACerd0Rhe/CBYBvVozm6veBRIBvVk7k6vfBhUBvdgyi5t+DiACzrZ1Bjf/IEwEnKXF7DUdXv/GKEdoedFt+lEIuwF7az1juw2s3YCW9rq47n7FFgJb7H1XcdgtixBY4qjb6cPv2YXAJUe/jjz1RasYmKZz3zzp7l0bUYytt3cK/wN6T4cfyIZ8WgAAAABJRU5ErkJggg==">
+<style>
+
+  :root{
+    --bg:#F2EBDD;
+    --surface:#FFFCF6;
+    --surface-2:#FBF3E4;
+    --ink:#2B2118;
+    --ink-soft:#6B5E4F;
+    --moss:#3F5C3A;
+    --moss-dark:#2A3F26;
+    --moss-light:#DCE6D6;
+    --clay:#9C5B3C;
+    --clay-light:#EFDCCB;
+    --gold:#AD7F26;
+    --gold-light:#F3E6C4;
+    --danger:#A23B3B;
+    --danger-light:#F3DBDB;
+    --line:#E4D8C3;
+    --shadow: 0 6px 20px rgba(43,33,24,0.08);
+    --shadow-sm: 0 2px 8px rgba(43,33,24,0.06);
+    --radius-card: 20px;
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:Tahoma,'Segoe UI',system-ui,-apple-system,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    justify-content:center;
+  }
+  #phone{
+    width:100%;
+    max-width:460px;
+    min-height:100vh;
+    background:var(--bg);
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    overflow-x:hidden;
+  }
+  .display-font{ font-family:Tahoma,'Segoe UI',sans-serif; font-weight:800; }
+
+  /* ---------- Header ---------- */
+  header.app-header{
+    background:linear-gradient(160deg, var(--moss) 0%, var(--moss-dark) 100%);
+    color:#F6F2E7;
+    padding:22px 20px 34px;
+    position:relative;
+    border-radius:0 0 32px 32px;
+    box-shadow:var(--shadow);
+  }
+  header.app-header .row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .brand h1{
+    font-family:Tahoma,'Segoe UI',sans-serif;
+    font-size:22px;
+    font-weight:800;
+    margin:0;
+    letter-spacing:0.2px;
+  }
+  .brand small{
+    display:block;
+    font-size:11px;
+    color:#CFE0C8;
+    margin-top:2px;
+    font-weight:500;
+  }
+  .mush-badge{ width:40px; height:40px; flex-shrink:0; }
+  .header-sub{
+    margin-top:18px;
+    font-size:13px;
+    color:#DCE9D4;
+  }
+
+  /* ---------- Main scroll area ---------- */
+  main{
+    flex:1;
+    padding:16px 16px 100px;
+    margin-top:-20px;
+  }
+  .tab-panel{ display:none; animation:fadeUp .25s ease; }
+  .tab-panel.active{ display:block; }
+  @keyframes fadeUp{
+    from{ opacity:0; transform:translateY(6px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius-card);
+    padding:16px;
+    box-shadow:var(--shadow-sm);
+    margin-bottom:14px;
+  }
+  .cap-card{
+    border-radius: 46% 46% var(--radius-card) var(--radius-card) / 30% 30% var(--radius-card) var(--radius-card);
+    padding-top:22px;
+  }
+  .section-title{
+    font-size:15px;
+    font-weight:800;
+    color:var(--moss-dark);
+    margin:22px 2px 10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .section-title:first-child{ margin-top:4px; }
+  .muted{ color:var(--ink-soft); font-size:12.5px; }
+
+  /* Stat grid on dashboard */
+  .stat-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .stat-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius: 50% 50% var(--radius-card) var(--radius-card) / 34% 34% var(--radius-card) var(--radius-card);
+    padding:20px 12px 14px;
+    text-align:center;
+    box-shadow:var(--shadow-sm);
+  }
+  .stat-card .num{ font-size:22px; font-weight:800; color:var(--moss-dark); }
+  .stat-card .lbl{ font-size:11.5px; color:var(--ink-soft); margin-top:2px; }
+  .stat-card.gold .num{ color:var(--gold); }
+  .stat-card.clay .num{ color:var(--clay); }
+
+  /* Buttons */
+  .btn{
+    border:none;
+    border-radius:14px;
+    padding:12px 16px;
+    font-family:inherit;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    transition:transform .12s ease, opacity .12s ease;
+  }
+  .btn:active{ transform:scale(0.96); }
+  .btn-primary{ background:var(--moss); color:#fff; }
+  .btn-gold{ background:var(--gold); color:#fff; }
+  .btn-clay{ background:var(--clay); color:#fff; }
+  .btn-danger{ background:var(--danger); color:#fff; }
+  .btn-ghost{ background:var(--surface-2); color:var(--ink); border:1px solid var(--line); }
+  .btn-block{ width:100%; }
+  .btn-sm{ padding:8px 12px; font-size:12.5px; border-radius:10px; }
+  .icon-btn{
+    width:34px; height:34px; border-radius:10px; border:1px solid var(--line);
+    background:var(--surface-2); display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+
+  .fab{
+    position:fixed;
+    bottom:calc(86px + var(--safe-bottom));
+    left:50%;
+    transform:translateX(calc(-230px + 24px));
+    background:var(--clay);
+    color:#fff;
+    width:52px; height:52px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 18px rgba(156,91,60,0.4);
+    border:none; cursor:pointer;
+    z-index:40;
+  }
+  @media (max-width:508px){
+    .fab{ left:auto; right:22px; transform:none; }
+  }
+
+  /* Lists / rows */
+  .list-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 4px; border-bottom:1px solid var(--line);
+    gap:10px;
+  }
+  .list-row:last-child{ border-bottom:none; }
+  .avatar{
+    width:38px;height:38px;border-radius:12px;background:var(--moss-light);
+    display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--moss-dark);
+    flex-shrink:0; font-size:14px;
+  }
+  .row-title{ font-weight:700; font-size:14px; }
+  .row-sub{ font-size:11.5px; color:var(--ink-soft); margin-top:1px; }
+  .balance-tag{
+    font-size:13px; font-weight:800; white-space:nowrap;
+  }
+  .balance-pos{ color:var(--moss-dark); }
+  .balance-zero{ color:var(--ink-soft); }
+  .empty-state{
+    text-align:center; padding:36px 12px; color:var(--ink-soft);
+  }
+  .empty-state svg{ width:52px; height:52px; opacity:.5; margin-bottom:10px; }
+  .empty-state .t{ font-weight:700; color:var(--ink); margin-bottom:4px; }
+
+  /* Forms */
+  label.f-label{ display:block; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin:12px 0 6px; }
+  input[type=text], input[type=number], input[type=date], input[type=tel], select, textarea{
+    width:100%; padding:11px 12px; border-radius:12px; border:1.5px solid var(--line);
+    background:var(--surface); font-family:inherit; font-size:14px; color:var(--ink);
+  }
+  input:focus, select:focus, textarea:focus{ outline:2px solid var(--moss); outline-offset:1px; border-color:var(--moss); }
+  textarea{ resize:vertical; min-height:60px; }
+  .field-row{ display:flex; gap:10px; }
+  .field-row > div{ flex:1; }
+  .checkbox-worker{
+    display:flex; align-items:center; gap:10px;
+    border:1.5px solid var(--line); border-radius:12px; padding:10px 12px; margin-bottom:8px;
+  }
+  .checkbox-worker.checked{ border-color:var(--moss); background:var(--moss-light); }
+  .checkbox-worker input[type=checkbox]{ width:18px; height:18px; accent-color:var(--moss); }
+  .checkbox-worker .amt{ width:110px; }
+  .checkbox-worker .name{ flex:1; font-weight:600; font-size:13.5px; }
+
+  /* Modal */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(27,20,14,0.5);
+    display:flex; align-items:flex-end; justify-content:center; z-index:100;
+  }
+  .modal-overlay.hidden{ display:none; }
+  .modal{
+    background:var(--bg); width:100%; max-width:460px;
+    border-radius:24px 24px 0 0; padding:20px 18px calc(24px + var(--safe-bottom));
+    max-height:88vh; overflow-y:auto;
+    animation:slideUp .22s ease;
+  }
+  @keyframes slideUp{ from{ transform:translateY(30px); opacity:0;} to{ transform:translateY(0); opacity:1;} }
+  .modal-handle{ width:40px; height:4px; background:var(--line); border-radius:4px; margin:0 auto 14px; }
+  .modal h2{ font-size:18px; margin:0 0 4px; color:var(--moss-dark); }
+  .modal-actions{ display:flex; gap:10px; margin-top:18px; }
+
+  /* Toast */
+  .toast{
+    position:fixed; bottom:calc(90px + var(--safe-bottom)); left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--moss-dark); color:#fff; padding:11px 18px; border-radius:14px; font-size:13px; font-weight:600;
+    box-shadow:var(--shadow); z-index:200; opacity:0; transition:all .25s ease; pointer-events:none; max-width:88%;
+    text-align:center;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+  .toast.danger{ background:var(--danger); }
+
+  /* Bottom nav */
+  nav.bottom-nav{
+    position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+    width:100%; max-width:460px;
+    background:var(--surface);
+    border-top:1px solid var(--line);
+    display:flex;
+    padding:8px 4px calc(8px + var(--safe-bottom));
+    z-index:50;
+    box-shadow:0 -4px 16px rgba(43,33,24,0.06);
+  }
+  .nav-btn{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
+    background:none; border:none; color:var(--ink-soft); font-family:inherit; font-size:10px;
+    padding:6px 2px; border-radius:14px; cursor:pointer; position:relative;
+  }
+  .nav-btn svg{ width:20px; height:20px; }
+  .nav-btn.active{ color:var(--moss-dark); }
+  .nav-btn.active::before{
+    content:'';
+    position:absolute; top:-2px; width:26px; height:14px;
+    background:var(--moss-light);
+    border-radius:50% 50% 6px 6px / 70% 70% 6px 6px;
+    z-index:-1;
+  }
+  .nav-more{ display:none; }
+
+  /* Reports table */
+  table.rep-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  table.rep-table th, table.rep-table td{ padding:8px 6px; text-align:center; border-bottom:1px solid var(--line); }
+  table.rep-table th{ color:var(--ink-soft); font-weight:700; font-size:11.5px; }
+  table.rep-table td:first-child, table.rep-table th:first-child{ text-align:right; }
+
+  .pill{ display:inline-block; padding:3px 9px; border-radius:20px; font-size:11px; font-weight:700; }
+  .pill-clay{ background:var(--clay-light); color:var(--clay); }
+  .pill-gold{ background:var(--gold-light); color:var(--gold); }
+  .pill-moss{ background:var(--moss-light); color:var(--moss-dark); }
+
+  a.plain{ color:inherit; text-decoration:none; }
+  hr.sep{ border:none; border-top:1px solid var(--line); margin:14px 0; }
+  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+</style>
+</head>
+<body>
+<div id="phone">
+
+  <header class="app-header">
+    <div class="row">
+      <div class="brand">
+        <svg class="mush-badge" viewBox="0 0 48 48" fill="none">
+          <path d="M8 22C8 12 15 6 24 6C33 6 40 12 40 22C40 25 37 25 34 24.5C29 23.5 27 27 24 27C21 27 19 23.5 14 24.5C11 25 8 25 8 22Z" fill="#F3EAD8"/>
+          <path d="M24 27V38C24 40.5 22.5 42 21 42" stroke="#F3EAD8" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="18" cy="16" r="1.6" fill="#9C5B3C"/>
+          <circle cx="27" cy="14" r="1.4" fill="#9C5B3C"/>
+          <circle cx="31" cy="19" r="1.2" fill="#9C5B3C"/>
+        </svg>
+        <div>
+          <h1>حساب کارگاه قارچ</h1>
+          <small id="header-date"></small>
+        </div>
+      </div>
+      <div class="icon-btn" onclick="goTab('settings')" style="background:rgba(255,255,255,0.12); border-color:rgba(255,255,255,0.2); color:#F3EAD8;">
+        ${'' }
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+      </div>
+    </div>
+    <div class="header-sub" id="header-summary">در حال بارگذاری اطلاعات…</div>
+  </header>
+
+  <main id="main">
+    <!-- ============ DASHBOARD ============ -->
+    <section class="tab-panel" id="tab-dashboard"></section>
+    <!-- ============ WORKERS ============ -->
+    <section class="tab-panel" id="tab-workers"></section>
+    <!-- ============ FACTORIES ============ -->
+    <section class="tab-panel" id="tab-factories"></section>
+    <!-- ============ WORKDAYS ============ -->
+    <section class="tab-panel" id="tab-workdays"></section>
+    <!-- ============ DEDUCTIONS ============ -->
+    <section class="tab-panel" id="tab-deductions"></section>
+    <!-- ============ SETTLEMENTS ============ -->
+    <section class="tab-panel" id="tab-settlements"></section>
+    <!-- ============ REPORTS ============ -->
+    <section class="tab-panel" id="tab-reports"></section>
+    <!-- ============ SETTINGS ============ -->
+    <section class="tab-panel" id="tab-settings"></section>
+  </main>
+
+  <button class="fab" id="fab-btn" onclick="handleFab()" aria-label="افزودن">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn" data-tab="dashboard" onclick="goTab('dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
+      خانه
+    </button>
+    <button class="nav-btn" data-tab="workers" onclick="goTab('workers')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c1-3.6 3.6-5.5 6.5-5.5s5.5 1.9 6.5 5.5"/><circle cx="17.5" cy="8.5" r="2.4"/><path d="M15.5 14.8c2.4.3 4 1.9 4.8 4.9"/></svg>
+      کارگران
+    </button>
+    <button class="nav-btn" data-tab="workdays" onclick="goTab('workdays')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3v3.6M16 3v3.6"/></svg>
+      کار روزانه
+    </button>
+    <button class="nav-btn" data-tab="deductions" onclick="goTab('deductions')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7" cy="6" r="2.6"/><circle cx="7" cy="18" r="2.6"/><path d="m5.5 8 13 13M18.5 5 9 14.4"/></svg>
+      کسورات
+    </button>
+    <button class="nav-btn" data-tab="settlements" onclick="goTab('settlements')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6.5" width="18" height="12.5" rx="2.3"/><path d="M3 10.5h18"/><circle cx="16.5" cy="15" r="1.4" fill="currentColor" stroke="none"/></svg>
+      تسویه
+    </button>
+    <button class="nav-btn" data-tab="reports" onclick="goTab('reports')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>
+      گزارش
+    </button>
+  </nav>
+
+  <div class="modal-overlay hidden" id="modal-overlay" onclick="if(event.target===this) closeModal()">
+    <div class="modal" id="modal-box">
+      <div class="modal-handle"></div>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+/* ===================== STATE & STORAGE ===================== */
+let state = { workers:[], factories:[], workdays:[], deductions:[], settlements:[], loaded:false };
+let currentTab = 'dashboard';
+
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+function fmt(n){ n = Math.round(Number(n)||0); return n.toLocaleString('en-US'); }
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function fmtDate(d){
+  try{
+    const dt = new Date(d);
+    return dt.toLocaleDateString('fa-IR', { year:'numeric', month:'2-digit', day:'2-digit' });
+  }catch(e){ return d; }
+}
+
+const STORAGE_PREFIX = 'mushroomApp_';
+async function loadKey(key){
+  try{
+    const raw = localStorage.getItem(STORAGE_PREFIX + key);
+    return raw ? JSON.parse(raw) : [];
+  }catch(e){ return []; }
+}
+async function saveKey(key, value){
+  try{
+    localStorage.setItem(STORAGE_PREFIX + key, JSON.stringify(value));
+    return true;
+  }catch(e){ toast('خطا در ذخیره‌سازی اطلاعات (حافظه مرورگر پر است؟)', true); return false; }
+}
+
+async function loadAll(){
+  const [w,f,wd,d,s] = await Promise.all([
+    loadKey('workers'), loadKey('factories'), loadKey('workdays'), loadKey('deductions'), loadKey('settlements')
+  ]);
+  state.workers = w; state.factories = f; state.workdays = wd; state.deductions = d; state.settlements = s;
+  state.loaded = true;
+}
+
+/* ===================== CALCULATIONS ===================== */
+function workerEarned(id, range){
+  return state.workdays
+    .filter(wd => inRange(wd.date, range))
+    .reduce((sum, wd) => sum + (wd.items.filter(i=>i.workerId===id).reduce((a,i)=>a+i.amount,0)), 0);
+}
+function workerDeducted(id, range){
+  return state.deductions.filter(d=>d.workerId===id && inRange(d.date, range)).reduce((s,d)=>s+d.amount,0);
+}
+function workerSettled(id, range){
+  return state.settlements.filter(x=>x.workerId===id && inRange(x.date, range)).reduce((s,x)=>s+x.amount,0);
+}
+function workerBalance(id){
+  return workerEarned(id) - workerDeducted(id) - workerSettled(id);
+}
+function inRange(dateStr, range){
+  if(!range) return true;
+  if(range.from && dateStr < range.from) return false;
+  if(range.to && dateStr > range.to) return false;
+  return true;
+}
+function factoryTotalPaid(fid, range){
+  return state.workdays.filter(wd=>wd.factoryId===fid && inRange(wd.date, range))
+    .reduce((s,wd)=> s + wd.items.reduce((a,i)=>a+i.amount,0), 0);
+}
+function workerName(id){ const w = state.workers.find(x=>x.id===id); return w? w.name : 'حذف‌شده'; }
+function factoryName(id){ if(!id) return '—'; const f = state.factories.find(x=>x.id===id); return f? f.name : 'حذف‌شده'; }
+function initials(name){ return (name||'?').trim().slice(0,1); }
+
+/* ===================== TOAST ===================== */
+let toastTimer=null;
+function toast(msg, isDanger){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.toggle('danger', !!isDanger);
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> el.classList.remove('show'), 2400);
+}
+
+/* ===================== MODAL ===================== */
+function openModal(html){
+  document.getElementById('modal-content').innerHTML = html;
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+function closeModal(){
+  document.getElementById('modal-overlay').classList.add('hidden');
+}
+
+/* ===================== NAV / TABS ===================== */
+function goTab(tab){
+  currentTab = tab;
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=> b.classList.toggle('active', b.dataset.tab===tab));
+  const fab = document.getElementById('fab-btn');
+  fab.style.display = ['dashboard','reports','settings'].includes(tab) ? 'none' : 'flex';
+  renderTab(tab);
+  document.getElementById('main').scrollTop = 0;
+  window.scrollTo(0,0);
+}
+function handleFab(){
+  if(currentTab==='workers') openWorkerForm();
+  else if(currentTab==='factories') openFactoryForm();
+  else if(currentTab==='workdays') openWorkdayForm();
+  else if(currentTab==='deductions') openDeductionForm();
+  else if(currentTab==='settlements') openSettlementForm();
+}
+
+function renderTab(tab){
+  if(tab==='dashboard') renderDashboard();
+  if(tab==='workers') renderWorkers();
+  if(tab==='factories') renderFactories();
+  if(tab==='workdays') renderWorkdays();
+  if(tab==='deductions') renderDeductions();
+  if(tab==='settlements') renderSettlements();
+  if(tab==='reports') renderReports();
+  if(tab==='settings') renderSettings();
+}
+
+/* ===================== DASHBOARD ===================== */
+function renderDashboard(){
+  const totalOwed = state.workers.reduce((s,w)=> s + Math.max(workerBalance(w.id),0), 0);
+  const events = getRecentEvents(6);
+  document.getElementById('header-summary').textContent =
+    state.workers.length ? `${state.workers.length} کارگر · ${state.factories.length} کارخانه · جمع بدهی: ${fmt(totalOwed)} تومان` : 'برای شروع، یک کارگر و یک کارخانه اضافه کنید';
+
+  const html = `
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num">${state.workers.length}</div><div class="lbl">کارگران</div></div>
+      <div class="stat-card clay"><div class="num">${state.factories.length}</div><div class="lbl">کارخانه‌های قارچ</div></div>
+      <div class="stat-card gold"><div class="num">${fmt(totalOwed)}</div><div class="lbl">جمع بدهی (تومان)</div></div>
+      <div class="stat-card"><div class="num">${state.workdays.length}</div><div class="lbl">ثبت کار روزانه</div></div>
+    </div>
+
+    <div class="section-title">🍄 وضعیت کارگران</div>
+    <div class="card">
+      ${state.workers.length===0 ? emptyState('هنوز کارگری ثبت نشده','از تب «کارگران» یک کارگر اضافه کنید') :
+        state.workers.map(w=>{
+          const bal = workerBalance(w.id);
+          return `<div class="list-row">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div class="avatar">${initials(w.name)}</div>
+              <div><div class="row-title">${esc(w.name)}</div><div class="row-sub">${w.phone?esc(w.phone):'بدون شماره'}</div></div>
+            </div>
+            <div class="balance-tag ${bal>0?'balance-pos':'balance-zero'}">${fmt(bal)} ت</div>
+          </div>`;
+        }).join('')}
+    </div>
+
+    <div class="section-title">📋 فعالیت‌های اخیر</div>
+    <div class="card">
+      ${events.length===0 ? emptyState('فعالیتی ثبت نشده','کار روزانه، کسورات یا تسویه اضافه کنید') :
+        events.map(ev=>`<div class="list-row">
+          <div><div class="row-title">${ev.title}</div><div class="row-sub">${fmtDate(ev.date)}</div></div>
+          <div class="balance-tag" style="color:${ev.color}">${ev.amountLabel}</div>
+        </div>`).join('')}
+    </div>
+  `;
+  document.getElementById('tab-dashboard').innerHTML = html;
+}
+
+function getRecentEvents(limit){
+  const evs = [];
+  state.workdays.forEach(wd=>{
+    const total = wd.items.reduce((a,i)=>a+i.amount,0);
+    evs.push({date:wd.date, title:`کار روزانه · ${factoryName(wd.factoryId)}`, amountLabel:'+'+fmt(total), color:'var(--moss-dark)', ts:wd.id});
+  });
+  state.deductions.forEach(d=>{
+    evs.push({date:d.date, title:`کسر از ${workerName(d.workerId)} · ${d.desc||'کسورات'}`, amountLabel:'-'+fmt(d.amount), color:'var(--danger)', ts:d.id});
+  });
+  state.settlements.forEach(s=>{
+    evs.push({date:s.date, title:`تسویه با ${workerName(s.workerId)}`, amountLabel:'-'+fmt(s.amount), color:'var(--gold)', ts:s.id});
+  });
+  return evs.sort((a,b)=> (b.date+b.ts).localeCompare(a.date+a.ts)).slice(0,limit);
+}
+
+function emptyState(title, sub){
+  return `<div class="empty-state">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20c1.5-5 5-8 8-8s6.5 3 8 8"/><circle cx="12" cy="7" r="4"/></svg>
+    <div class="t">${title}</div><div>${sub}</div>
+  </div>`;
+}
+function esc(s){ return (s||'').toString().replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+/* ===================== WORKERS ===================== */
+function renderWorkers(){
+  const html = `
+    <div class="section-title">👷 لیست کارگران</div>
+    <div class="card">
+      ${state.workers.length===0 ? emptyState('کارگری ثبت نشده','با دکمه + یک کارگر اضافه کنید') :
+      state.workers.map(w=>{
+        const bal = workerBalance(w.id);
+        return `<div class="list-row" onclick="openWorkerDetail('${w.id}')" style="cursor:pointer;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="avatar">${initials(w.name)}</div>
+            <div><div class="row-title">${esc(w.name)}</div><div class="row-sub">${w.phone?esc(w.phone):'بدون شماره'}</div></div>
+          </div>
+          <div class="balance-tag ${bal>0?'balance-pos':'balance-zero'}">${fmt(bal)} ت</div>
+        </div>`;
+      }).join('')}
+    </div>
+    <p class="muted" style="text-align:center;">برای مشاهده‌ی ریز حساب هر کارگر، روی نامش بزنید.</p>
+  `;
+  document.getElementById('tab-workers').innerHTML = html;
+}
+
+function openWorkerForm(editId){
+  const w = editId ? state.workers.find(x=>x.id===editId) : null;
+  openModal(`
+    <h2>${w? 'ویرایش کارگر' : 'افزودن کارگر جدید'}</h2>
+    <label class="f-label">نام کارگر</label>
+    <input type="text" id="f-worker-name" value="${w?esc(w.name):''}" placeholder="مثلاً علی رضایی">
+    <label class="f-label">شماره تماس (اختیاری)</label>
+    <input type="tel" id="f-worker-phone" value="${w?esc(w.phone||''):''}" placeholder="09xxxxxxxxx">
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeModal()">انصراف</button>
+      <button class="btn btn-primary" style="flex:2" onclick="saveWorker(${w?`'${w.id}'`:'null'})">ذخیره</button>
+    </div>
+    ${w?`<button class="btn btn-danger btn-block" style="margin-top:10px" onclick="deleteWorker('${w.id}')">حذف کارگر</button>`:''}
+  `);
+}
+async function saveWorker(id){
+  const name = document.getElementById('f-worker-name').value.trim();
+  const phone = document.getElementById('f-worker-phone').value.trim();
+  if(!name){ toast('نام کارگر را وارد کنید', true); return; }
+  if(id){
+    const w = state.workers.find(x=>x.id===id); w.name=name; w.phone=phone;
+  }else{
+    state.workers.push({id:uid(), name, phone});
+  }
+  await saveKey('workers', state.workers);
+  closeModal(); toast('ذخیره شد ✓'); renderTab(currentTab);
+}
+async function deleteWorker(id){
+  if(!confirm('این کارگر حذف شود؟ سوابق کاری او باقی می‌ماند اما نامش حذف می‌شود.')) return;
+  state.workers = state.workers.filter(w=>w.id!==id);
+  await saveKey('workers', state.workers);
+  closeModal(); toast('کارگر حذف شد'); renderTab(currentTab);
+}
+
+function openWorkerDetail(id){
+  const w = state.workers.find(x=>x.id===id);
+  if(!w) return;
+  const earned = workerEarned(id), deducted = workerDeducted(id), settled = workerSettled(id), bal = workerBalance(id);
+  const history = getWorkerHistory(id);
+  openModal(`
+    <h2>${esc(w.name)}</h2>
+    <p class="muted">${w.phone?esc(w.phone):'بدون شماره تماس'}</p>
+    <div class="grid-2" style="margin-top:10px;">
+      <div class="card" style="margin-bottom:0;"><div class="muted">جمع دریافتی</div><div style="font-weight:800;color:var(--moss-dark)">${fmt(earned)} ت</div></div>
+      <div class="card" style="margin-bottom:0;"><div class="muted">جمع کسورات</div><div style="font-weight:800;color:var(--danger)">${fmt(deducted)} ت</div></div>
+      <div class="card" style="margin-bottom:0;"><div class="muted">جمع تسویه‌شده</div><div style="font-weight:800;color:var(--gold)">${fmt(settled)} ت</div></div>
+      <div class="card" style="margin-bottom:0;"><div class="muted">مانده قابل پرداخت</div><div style="font-weight:800;color:var(--moss-dark)">${fmt(bal)} ت</div></div>
+    </div>
+    <div class="section-title" style="margin-top:18px;">تاریخچه</div>
+    <div style="max-height:220px; overflow-y:auto;">
+      ${history.length===0? emptyState('سابقه‌ای نیست','') :
+        history.map(h=>`<div class="list-row"><div><div class="row-title" style="font-size:13px;">${h.title}</div><div class="row-sub">${fmtDate(h.date)}</div></div><div class="balance-tag" style="color:${h.color}">${h.label}</div></div>`).join('')}
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeModal()">بستن</button>
+      <button class="btn btn-gold" style="flex:1" onclick="closeModal(); goTab('settlements'); setTimeout(()=>openSettlementForm('${w.id}'),150);">تسویه حساب</button>
+      <button class="btn btn-primary" style="flex:1" onclick="openWorkerForm('${w.id}')">ویرایش</button>
+    </div>
+  `);
+}
+function getWorkerHistory(id){
+  const h = [];
+  state.workdays.forEach(wd=>{
+    const item = wd.items.find(i=>i.workerId===id);
+    if(item) h.push({date:wd.date, title:'کار روزانه · '+factoryName(wd.factoryId), label:'+'+fmt(item.amount), color:'var(--moss-dark)', ts:wd.id});
+  });
+  state.deductions.filter(d=>d.workerId===id).forEach(d=>{
+    h.push({date:d.date, title:'کسورات · '+(d.desc||'-'), label:'-'+fmt(d.amount), color:'var(--danger)', ts:d.id});
+  });
+  state.settlements.filter(s=>s.workerId===id).forEach(s=>{
+    h.push({date:s.date, title:'تسویه حساب', label:'-'+fmt(s.amount), color:'var(--gold)', ts:s.id});
+  });
+  return h.sort((a,b)=>(b.date+b.ts).localeCompare(a.date+a.ts));
+}
+
+/* ===================== FACTORIES ===================== */
+function renderFactories(){
+  const html = `
+    <div class="section-title">🏭 کارخانه‌های قارچ</div>
+    <div class="card">
+      ${state.factories.length===0? emptyState('کارخانه‌ای ثبت نشده','با دکمه + یک کارخانه اضافه کنید') :
+      state.factories.map(f=>{
+        const paid = factoryTotalPaid(f.id);
+        return `<div class="list-row">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="avatar" style="background:var(--clay-light); color:var(--clay);">${initials(f.name)}</div>
+            <div><div class="row-title">${esc(f.name)}</div><div class="row-sub">${f.note?esc(f.note):'بدون توضیح'}</div></div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="pill pill-clay">${fmt(paid)} ت</span>
+            <span class="icon-btn" onclick="openFactoryForm('${f.id}')" style="width:30px;height:30px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            </span>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+  document.getElementById('tab-factories').innerHTML = html;
+}
+function openFactoryForm(editId){
+  const f = editId ? state.factories.find(x=>x.id===editId) : null;
+  openModal(`
+    <h2>${f? 'ویرایش کارخانه' : 'افزودن کارخانه قارچ'}</h2>
+    <label class="f-label">نام کارخانه</label>
+    <input type="text" id="f-factory-name" value="${f?esc(f.name):''}" placeholder="مثلاً کارخانه قارچ سبز">
+    <label class="f-label">توضیح (اختیاری)</label>
+    <input type="text" id="f-factory-note" value="${f?esc(f.note||''):''}" placeholder="آدرس یا توضیح کوتاه">
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeModal()">انصراف</button>
+      <button class="btn btn-primary" style="flex:2" onclick="saveFactory(${f?`'${f.id}'`:'null'})">ذخیره</button>
+    </div>
+    ${f?`<button class="btn btn-danger btn-block" style="margin-top:10px" onclick="deleteFactory('${f.id}')">حذف کارخانه</button>`:''}
+  `);
+}
+async function saveFactory(id){
+  const name = document.getElementById('f-factory-name').value.trim();
+  const note = document.getElementById('f-factory-note').value.trim();
+  if(!name){ toast('نام کارخانه را وارد کنید', true); return; }
+  if(id){ const f = state.factories.find(x=>x.id===id); f.name=name; f.note=note; }
+  else{ state.factories.push({id:uid(), name, note}); }
+  await saveKey('factories', state.factories);
+  closeModal(); toast('ذخیره شد ✓'); renderTab(currentTab);
+}
+async function deleteFactory(id){
+  if(!confirm('این کارخانه حذف شود؟')) return;
+  state.factories = state.factories.filter(f=>f.id!==id);
+  await saveKey('factories', state.factories);
+  closeModal(); toast('حذف شد'); renderTab(currentTab);
+}
+
+/* ===================== WORKDAYS (کار روزانه) ===================== */
+function renderWorkdays(){
+  const sorted = [...state.workdays].sort((a,b)=> (b.date+b.id).localeCompare(a.date+a.id));
+  const html = `
+    <div class="section-title">📅 ثبت کارهای روزانه</div>
+    <div class="card">
+      ${sorted.length===0? emptyState('هنوز کاری ثبت نشده','با دکمه + یک روز کاری اضافه کنید') :
+      sorted.map(wd=>{
+        const total = wd.items.reduce((a,i)=>a+i.amount,0);
+        return `<div class="list-row" onclick="openWorkdayForm('${wd.id}')" style="cursor:pointer; align-items:flex-start;">
+          <div>
+            <div class="row-title">${factoryName(wd.factoryId)}</div>
+            <div class="row-sub">${fmtDate(wd.date)} · ${wd.items.length} کارگر</div>
+            <div class="row-sub">${wd.items.map(i=>workerName(i.workerId)+' ('+fmt(i.amount)+')').join('، ')}</div>
+          </div>
+          <div class="balance-tag balance-pos">${fmt(total)} ت</div>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+  document.getElementById('tab-workdays').innerHTML = html;
+}
+function openWorkdayForm(editId){
+  const wd = editId ? state.workdays.find(x=>x.id===editId) : null;
+  if(state.workers.length===0 || state.factories.length===0){
+    toast('ابتدا یک کارگر و یک کارخانه ثبت کنید', true); return;
+  }
+  const selected = wd ? wd.items.map(i=>i.workerId) : [];
+  const amounts = {}; if(wd) wd.items.forEach(i=> amounts[i.workerId]=i.amount);
+  openModal(`
+    <h2>${wd? 'ویرایش کار روزانه' : 'ثبت کار روزانه جدید'}</h2>
+    <label class="f-label">تاریخ</label>
+    <input type="date" id="f-wd-date" value="${wd?wd.date:todayStr()}">
+    <label class="f-label">کارخانه</label>
+    <select id="f-wd-factory">
+      ${state.factories.map(f=>`<option value="${f.id}" ${wd&&wd.factoryId===f.id?'selected':''}>${esc(f.name)}</option>`).join('')}
+    </select>
+    <label class="f-label">مبلغ کل روز (برای تقسیم مساوی)</label>
+    <div class="field-row">
+      <input type="number" id="f-wd-total" placeholder="مثلاً 2000000">
+      <button class="btn btn-ghost btn-sm" style="flex:0 0 auto;" onclick="splitEqually()">تقسیم مساوی</button>
+    </div>
+    <label class="f-label">کارگران حاضر و سهم هرکدام (تومان)</label>
+    <div id="wd-workers-list">
+      ${state.workers.map(w=>`
+        <div class="checkbox-worker ${selected.includes(w.id)?'checked':''}" id="wdrow-${w.id}">
+          <input type="checkbox" id="wdchk-${w.id}" ${selected.includes(w.id)?'checked':''} onchange="toggleWdRow('${w.id}')">
+          <span class="name">${esc(w.name)}</span>
+          <input type="number" class="amt" id="wdamt-${w.id}" value="${amounts[w.id]||''}" placeholder="0">
+        </div>
+      `).join('')}
+    </div>
+    <textarea id="f-wd-note" placeholder="توضیح (اختیاری)" style="margin-top:10px;">${wd&&wd.note?esc(wd.note):''}</textarea>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeModal()">انصراف</button>
+      <button class="btn btn-primary" style="flex:2" onclick="saveWorkday(${wd?`'${wd.id}'`:'null'})">ذخیره</button>
+    </div>
+    ${wd?`<button class="btn btn-danger btn-block" style="margin-top:10px" onclick="deleteWorkday('${wd.id}')">حذف این روز کاری</button>`:''}
+  `);
+}
+function toggleWdRow(wid){
+  const row = document.getElementById('wdrow-'+wid);
+  const chk = document.getElementById('wdchk-'+wid);
+  row.classList.toggle('checked', chk.checked);
+}
+function splitEqually(){
+  const total = Number(document.getElementById('f-wd-total').value)||0;
+  const checked = state.workers.filter(w=> document.getElementById('wdchk-'+w.id).checked);
+  if(checked.length===0){ toast('ابتدا کارگران حاضر را انتخاب کنید', true); return; }
+  if(total<=0){ toast('مبلغ کل را وارد کنید', true); return; }
+  const share = Math.floor(total/checked.length);
+  checked.forEach((w,idx)=>{
+    const amt = idx===checked.length-1 ? (total - share*(checked.length-1)) : share;
+    document.getElementById('wdamt-'+w.id).value = amt;
+  });
+}
+async function saveWorkday(id){
+  const date = document.getElementById('f-wd-date').value;
+  const factoryId = document.getElementById('f-wd-factory').value;
+  const note = document.getElementById('f-wd-note').value.trim();
+  if(!date){ toast('تاریخ را وارد کنید', true); return; }
+  const items = [];
+  state.workers.forEach(w=>{
+    const chk = document.getElementById('wdchk-'+w.id).checked;
+    const amt = Number(document.getElementById('wdamt-'+w.id).value)||0;
+    if(chk && amt>0) items.push({workerId:w.id, amount:amt});
+  });
+  if(items.length===0){ toast('حداقل یک کارگر با مبلغ معتبر انتخاب کنید', true); return; }
+  if(id){
+    const wd = state.workdays.find(x=>x.id===id);
+    wd.date=date; wd.factoryId=factoryId; wd.items=items; wd.note=note;
+  }else{
+    state.workdays.push({id:uid(), date, factoryId, items, note});
+  }
+  await saveKey('workdays', state.workdays);
+  closeModal(); toast('کار روزانه ثبت شد ✓'); renderTab(currentTab);
+}
+async function deleteWorkday(id){
+  if(!confirm('این رکورد حذف شود؟')) return;
+  state.workdays = state.workdays.filter(x=>x.id!==id);
+  await saveKey('workdays', state.workdays);
+  closeModal(); toast('حذف شد'); renderTab(currentTab);
+}
+
+/* ===================== DEDUCTIONS (کسورات) ===================== */
+function renderDeductions(){
+  const sorted = [...state.deductions].sort((a,b)=>(b.date+b.id).localeCompare(a.date+a.id));
+  const html = `
+    <div class="section-title">✂️ کسورات کارگران</div>
+    <p class="muted">مثلاً وقتی کارگری مقداری قارچ یا کالا از کارخانه برداشته و باید از حساب او کم شود.</p>
+    <div class="card">
+      ${sorted.length===0? emptyState('کسری ثبت نشده','با دکمه + یک کسر جدید اضافه کنید') :
+      sorted.map(d=>`<div class="list-row" onclick="openDeductionForm('${d.id}')" style="cursor:pointer;">
+        <div>
+          <div class="row-title">${workerName(d.workerId)}</div>
+          <div class="row-sub">${d.desc||'کسورات'} ${d.kg?`· ${d.kg} کیلو × ${fmt(d.pricePerKg)} ت`:''}</div>
+          <div class="row-sub">${fmtDate(d.date)} ${d.factoryId?'· '+factoryName(d.factoryId):''}</div>
+        </div>
+        <div class="balance-tag" style="color:var(--danger)">-${fmt(d.amount)} ت</div>
+      </div>`).join('')}
+    </div>
+  `;
+  document.getElementById('tab-deductions').innerHTML = html;
+}
+function openDeductionForm(editId){
+  const d = editId? state.deductions.find(x=>x.id===editId): null;
+  if(state.workers.length===0){ toast('ابتدا یک کارگر ثبت کنید', true); return; }
+  openModal(`
+    <h2>${d?'ویرایش کسورات':'ثبت کسر جدید'}</h2>
+    <label class="f-label">کارگر</label>
+    <select id="f-ded-worker">
+      ${state.workers.map(w=>`<option value="${w.id}" ${d&&d.workerId===w.id?'selected':''}>${esc(w.name)}</option>`).join('')}
+    </select>
+    <label class="f-label">تاریخ</label>
+    <input type="date" id="f-ded-date" value="${d?d.date:todayStr()}">
+    <label class="f-label">کارخانه مربوطه (اختیاری)</label>
+    <select id="f-ded-factory">
+      <option value="">— بدون کارخانه —</option>
+      ${state.factories.map(f=>`<option value="${f.id}" ${d&&d.factoryId===f.id?'selected':''}>${esc(f.name)}</option>`).join('')}
+    </select>
+    <label class="f-label">شرح کسر (مثلاً «برداشت قارچ»)</label>
+    <input type="text" id="f-ded-desc" value="${d?esc(d.desc||''):''}" placeholder="شرح کسر">
+    <div class="field-row">
+      <div>
+        <label class="f-label">مقدار (کیلوگرم)</label>
+        <input type="number" id="f-ded-kg" value="${d&&d.kg?d.kg:''}" oninput="calcDedAmount()" placeholder="مثلاً 5">
+      </div>
+      <div>
+        <label class="f-label">قیمت هر کیلو (تومان)</label>
+        <input type="number" id="f-ded-price" value="${d&&d.pricePerKg?d.pricePerKg:''}" oninput="calcDedAmount()" placeholder="مثلاً 80000">
+      </div>
+    </div>
+    <label class="f-label">مبلغ کسر (تومان) — در صورت نیاز دستی ویرایش کنید</label>
+    <input type="number" id="f-ded-amount" value="${d?d.amount:''}" placeholder="0">
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeModal()">انصراف</button>
+      <button class="btn btn-danger" style="flex:2" onclick="saveDeduction(${d?`'${d.id}'`:'null'})">ذخیره کسر</button>
+    </div>
+    ${d?`<button class="btn btn-ghost btn-block" style="margin-top:10px" onclick="deleteDeduction('${d.id}')">حذف این کسر</button>`:''}
+  `);
+}
+function calcDedAmount(){
+  const kg = Number(document.getElementById('f-ded-kg').value)||0;
+  const price = Number(document.getElementById('f-ded-price').value)||0;
+  if(kg>0 && price>0) document.getElementById('f-ded-amount').value = Math.round(kg*price);
+}
+async function saveDeduction(id){
+  const workerId = document.getElementById('f-ded-worker').value;
+  const date = document.getElementById('f-ded-date').value;
+  const factoryId = document.getElementById('f-ded-factory').value || null;
+  const desc = document.getElementById('f-ded-desc').value.trim();
+  const kg = Number(document.getElementById('f-ded-kg').value)||0;
+  const pricePerKg = Number(document.getElementById('f-ded-price').value)||0;
+  const amount = Number(document.getElementById('f-ded-amount').value)||0;
+  if(!date){ toast('تاریخ را وارد کنید', true); return; }
+  if(amount<=0){ toast('مبلغ کسر باید بزرگتر از صفر باشد', true); return; }
+  if(id){
+    const d = state.deductions.find(x=>x.id===id);
+    Object.assign(d, {workerId,date,factoryId,desc,kg,pricePerKg,amount});
+  }else{
+    state.deductions.push({id:uid(), workerId,date,factoryId,desc,kg,pricePerKg,amount});
+  }
+  await saveKey('deductions', state.deductions);
+  closeModal(); toast('کسر ثبت شد ✓'); renderTab(currentTab);
+}
+async function deleteDeduction(id){
+  if(!confirm('این کسر حذف شود؟')) return;
+  state.deductions = state.deductions.filter(x=>x.id!==id);
+  await saveKey('deductions', state.deductions);
+  closeModal(); toast('حذف شد'); renderTab(currentTab);
+}
+
+/* ===================== SETTLEMENTS (تسویه حساب) ===================== */
+function renderSettlements(){
+  const sorted = [...state.settlements].sort((a,b)=>(b.date+b.id).localeCompare(a.date+a.id));
+  const html = `
+    <div class="section-title">💰 تسویه حساب کارگران</div>
+    <div class="card" style="display:flex; gap:10px; flex-wrap:wrap;">
+      ${state.workers.length===0? '<span class="muted">ابتدا کارگر اضافه کنید</span>' :
+        state.workers.map(w=>{
+          const bal = workerBalance(w.id);
+          return `<div class="pill ${bal>0?'pill-moss':'pill-gold'}" style="cursor:pointer;" onclick="openSettlementForm('${w.id}')">${esc(w.name)}: ${fmt(bal)} ت</div>`;
+        }).join('')}
+    </div>
+    <div class="section-title">تاریخچه تسویه‌ها</div>
+    <div class="card">
+      ${sorted.length===0? emptyState('تسویه‌ای ثبت نشده','با دکمه + یک تسویه ثبت کنید') :
+      sorted.map(s=>`<div class="list-row" onclick="openSettlementForm(null,'${s.id}')" style="cursor:pointer;">
+        <div>
+          <div class="row-title">${workerName(s.workerId)}</div>
+          <div class="row-sub">${s.bankName?esc(s.bankName)+' · ':''}${s.cardNumber?maskCard(s.cardNumber):'بدون شماره کارت'}</div>
+          <div class="row-sub">${fmtDate(s.date)}</div>
+        </div>
+        <div class="balance-tag" style="color:var(--gold)">${fmt(s.amount)} ت</div>
+      </div>`).join('')}
+    </div>
+  `;
+  document.getElementById('tab-settlements').innerHTML = html;
+}
+function maskCard(c){
+  c = (c||'').replace(/\\s+/g,'');
+  if(c.length<=4) return c;
+  return c.slice(0,4)+' •••• •••• '+c.slice(-4);
+}
+function openSettlementForm(preselectWorkerId, editId){
+  const s = editId ? state.settlements.find(x=>x.id===editId) : null;
+  if(state.workers.length===0){ toast('ابتدا یک کارگر ثبت کنید', true); return; }
+  const wid = s? s.workerId : (preselectWorkerId || state.workers[0].id);
+  openModal(`
+    <h2>${s?'ویرایش تسویه':'ثبت تسویه حساب'}</h2>
+    <label class="f-label">کارگر</label>
+    <select id="f-st-worker" onchange="updateStBalance()">
+      ${state.workers.map(w=>`<option value="${w.id}" ${wid===w.id?'selected':''}>${esc(w.name)}</option>`).join('')}
+    </select>
+    <p class="muted" id="f-st-balance-hint" style="margin:6px 0 0;"></p>
+    <label class="f-label">تاریخ</label>
+    <input type="date" id="f-st-date" value="${s?s.date:todayStr()}">
+    <label class="f-label">مبلغ واریزی (تومان)</label>
+    <input type="number" id="f-st-amount" value="${s?s.amount:''}" placeholder="0">
+    <hr class="sep">
+    <label class="f-label">نام بانک</label>
+    <input type="text" id="f-st-bank" value="${s?esc(s.bankName||''):''}" placeholder="مثلاً بانک ملت">
+    <label class="f-label">شماره کارت واریزی</label>
+    <input type="text" id="f-st-card" value="${s?esc(s.cardNumber||''):''}" placeholder="xxxx xxxx xxxx xxxx" maxlength="19">
+    <label class="f-label">نام صاحب کارت</label>
+    <input type="text" id="f-st-holder" value="${s?esc(s.cardHolder||''):''}" placeholder="نام و نام خانوادگی">
+    <label class="f-label">توضیح (اختیاری)</label>
+    <textarea id="f-st-note">${s&&s.note?esc(s.note):''}</textarea>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeModal()">انصراف</button>
+      <button class="btn btn-gold" style="flex:2" onclick="saveSettlement(${s?`'${s.id}'`:'null'})">ثبت تسویه</button>
+    </div>
+    ${s?`<button class="btn btn-danger btn-block" style="margin-top:10px" onclick="deleteSettlement('${s.id}')">حذف این تسویه</button>`:''}
+  `);
+  setTimeout(updateStBalance, 0);
+}
+function updateStBalance(){
+  const wid = document.getElementById('f-st-worker').value;
+  const bal = workerBalance(wid);
+  document.getElementById('f-st-balance-hint').textContent = `مانده فعلی این کارگر: ${fmt(bal)} تومان`;
+  const amtField = document.getElementById('f-st-amount');
+  if(!amtField.value) amtField.value = bal>0? bal : '';
+}
+async function saveSettlement(id){
+  const workerId = document.getElementById('f-st-worker').value;
+  const date = document.getElementById('f-st-date').value;
+  const amount = Number(document.getElementById('f-st-amount').value)||0;
+  const bankName = document.getElementById('f-st-bank').value.trim();
+  const cardNumber = document.getElementById('f-st-card').value.trim();
+  const cardHolder = document.getElementById('f-st-holder').value.trim();
+  const note = document.getElementById('f-st-note').value.trim();
+  if(!date){ toast('تاریخ را وارد کنید', true); return; }
+  if(amount<=0){ toast('مبلغ تسویه باید بزرگتر از صفر باشد', true); return; }
+  if(id){
+    const s = state.settlements.find(x=>x.id===id);
+    Object.assign(s, {workerId,date,amount,bankName,cardNumber,cardHolder,note});
+  }else{
+    state.settlements.push({id:uid(), workerId,date,amount,bankName,cardNumber,cardHolder,note});
+  }
+  await saveKey('settlements', state.settlements);
+  closeModal(); toast('تسویه ثبت شد ✓'); renderTab(currentTab);
+}
+async function deleteSettlement(id){
+  if(!confirm('این تسویه حذف شود؟')) return;
+  state.settlements = state.settlements.filter(x=>x.id!==id);
+  await saveKey('settlements', state.settlements);
+  closeModal(); toast('حذف شد'); renderTab(currentTab);
+}
+
+/* ===================== REPORTS ===================== */
+function renderReports(){
+  const html = `
+    <div class="section-title">📊 گزارش‌ها</div>
+    <div class="card">
+      <div class="field-row">
+        <div><label class="f-label">از تاریخ</label><input type="date" id="rep-from"></div>
+        <div><label class="f-label">تا تاریخ</label><input type="date" id="rep-to" value="${todayStr()}"></div>
+      </div>
+      <button class="btn btn-primary btn-block" style="margin-top:12px;" onclick="generateReport()">نمایش گزارش</button>
+    </div>
+    <div id="report-output"></div>
+  `;
+  document.getElementById('tab-reports').innerHTML = html;
+  generateReport();
+}
+function generateReport(){
+  const from = document.getElementById('rep-from')?.value || '';
+  const to = document.getElementById('rep-to')?.value || '';
+  const range = {from, to};
+  let workerRows = state.workers.map(w=>{
+    const e = workerEarned(w.id, range), d = workerDeducted(w.id, range), s = workerSettled(w.id, range);
+    return {name:w.name, e, d, s, bal:e-d-s};
+  });
+  let factoryRows = state.factories.map(f=> ({name:f.name, total: factoryTotalPaid(f.id, range)}));
+  const totalEarned = workerRows.reduce((a,r)=>a+r.e,0);
+  const totalDed = workerRows.reduce((a,r)=>a+r.d,0);
+  const totalSettled = workerRows.reduce((a,r)=>a+r.s,0);
+
+  const html = `
+    <div class="section-title">جمع‌بندی کارگران</div>
+    <div class="card">
+      ${workerRows.length===0? emptyState('داده‌ای نیست','') : `
+      <table class="rep-table">
+        <thead><tr><th>کارگر</th><th>دریافتی</th><th>کسورات</th><th>تسویه</th><th>مانده</th></tr></thead>
+        <tbody>
+          ${workerRows.map(r=>`<tr><td>${esc(r.name)}</td><td>${fmt(r.e)}</td><td style="color:var(--danger)">${fmt(r.d)}</td><td style="color:var(--gold)">${fmt(r.s)}</td><td style="font-weight:800;">${fmt(r.bal)}</td></tr>`).join('')}
+        </tbody>
+      </table>`}
+    </div>
+    <div class="section-title">جمع‌بندی کارخانه‌ها</div>
+    <div class="card">
+      ${factoryRows.length===0? emptyState('داده‌ای نیست','') : `
+      <table class="rep-table">
+        <thead><tr><th>کارخانه</th><th>مجموع پرداختی</th></tr></thead>
+        <tbody>${factoryRows.map(r=>`<tr><td>${esc(r.name)}</td><td>${fmt(r.total)}</td></tr>`).join('')}</tbody>
+      </table>`}
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num">${fmt(totalEarned)}</div><div class="lbl">جمع دریافتی همه</div></div>
+      <div class="stat-card gold"><div class="num">${fmt(totalSettled)}</div><div class="lbl">جمع تسویه‌شده</div></div>
+    </div>
+  `;
+  document.getElementById('report-output').innerHTML = html;
+}
+
+/* ===================== SETTINGS / BACKUP ===================== */
+function renderSettings(){
+  const html = `
+    <div class="section-title">💾 پشتیبان‌گیری و بازیابی</div>
+    <div class="card">
+      <p class="muted">از تمام اطلاعات (کارگران، کارخانه‌ها، کارهای روزانه، کسورات و تسویه‌ها) یک فایل پشتیبان تهیه کنید.</p>
+      <button class="btn btn-primary btn-block" onclick="exportBackup()">📤 دانلود فایل پشتیبان</button>
+      <hr class="sep">
+      <p class="muted">برای بازیابی، فایل پشتیبان قبلی را انتخاب کنید. اطلاعات فعلی با فایل پشتیبان جایگزین می‌شود.</p>
+      <input type="file" id="restore-file" accept="application/json" style="margin-bottom:10px;">
+      <button class="btn btn-clay btn-block" onclick="importBackup()">📥 بازیابی از فایل</button>
+    </div>
+    <div class="section-title">⚠️ منطقه خطر</div>
+    <div class="card">
+      <p class="muted">تمام اطلاعات برنامه برای همیشه پاک می‌شود. این کار قابل بازگشت نیست، مگر اینکه پشتیبان داشته باشید.</p>
+      <button class="btn btn-danger btn-block" onclick="resetAllData()">پاک کردن کامل اطلاعات</button>
+    </div>
+    <div class="section-title">درباره</div>
+    <div class="card muted">
+      نسخه ۱.۰ · اطلاعات به‌صورت خودکار در همین دستگاه ذخیره می‌شود. برای اطمینان کامل، مرتب از قسمت پشتیبان‌گیری فایل خروجی بگیرید.
+    </div>
+  `;
+  document.getElementById('tab-settings').innerHTML = html;
+}
+function exportBackup(){
+  const data = {
+    exportedAt: new Date().toISOString(),
+    workers: state.workers, factories: state.factories,
+    workdays: state.workdays, deductions: state.deductions, settlements: state.settlements
+  };
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'پشتیبان-حساب-قارچ-'+todayStr()+'.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('فایل پشتیبان دانلود شد ✓');
+}
+function importBackup(){
+  const inp = document.getElementById('restore-file');
+  if(!inp.files || !inp.files[0]){ toast('یک فایل انتخاب کنید', true); return; }
+  if(!confirm('اطلاعات فعلی با فایل پشتیبان جایگزین می‌شود. ادامه می‌دهید؟')) return;
+  const reader = new FileReader();
+  reader.onload = async (e)=>{
+    try{
+      const data = JSON.parse(e.target.result);
+      state.workers = data.workers || [];
+      state.factories = data.factories || [];
+      state.workdays = data.workdays || [];
+      state.deductions = data.deductions || [];
+      state.settlements = data.settlements || [];
+      await Promise.all([
+        saveKey('workers', state.workers), saveKey('factories', state.factories),
+        saveKey('workdays', state.workdays), saveKey('deductions', state.deductions),
+        saveKey('settlements', state.settlements)
+      ]);
+      toast('بازیابی با موفقیت انجام شد ✓');
+      renderTab(currentTab);
+    }catch(err){ toast('فایل پشتیبان معتبر نیست', true); }
+  };
+  reader.readAsText(inp.files[0]);
+}
+async function resetAllData(){
+  if(!confirm('آیا مطمئن هستید؟ همه اطلاعات برای همیشه حذف می‌شود.')) return;
+  if(!confirm('تأیید نهایی: تمام کارگران، کارخانه‌ها، کارها، کسورات و تسویه‌ها پاک شود؟')) return;
+  state.workers=[]; state.factories=[]; state.workdays=[]; state.deductions=[]; state.settlements=[];
+  await Promise.all([saveKey('workers',[]),saveKey('factories',[]),saveKey('workdays',[]),saveKey('deductions',[]),saveKey('settlements',[])]);
+  toast('همه اطلاعات پاک شد'); renderTab(currentTab);
+}
+
+/* ===================== INIT ===================== */
+async function init(){
+  document.getElementById('header-date').textContent = new Date().toLocaleDateString('fa-IR', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  await loadAll();
+  goTab('dashboard');
+}
+init();
+</script>
+</body>
+</html>

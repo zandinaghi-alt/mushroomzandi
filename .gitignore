@@ -1,0 +1,13 @@
+.gradle/
+build/
+app/build/
+*.iml
+.idea/
+local.properties
+
+# اطلاعات محرمانه‌ی امضای برنامه — هرگز نباید در گیت‌هاب یا هر ریپازیتوری عمومی/اشتراکی قرار بگیرند
+keystore.properties
+app/release.keystore
+*.jks
+*.keystore
+
